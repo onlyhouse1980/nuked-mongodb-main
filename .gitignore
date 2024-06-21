@@ -1,0 +1,14 @@
+node_modules
+.next/*
+.yarn/*
+.next/trace
+.DS_Store
+yarn-error.log
+.next/cache
+.next/server
+.yarnrc.yml
+.DS_Store
+.pnp.cjs
+.pnp.loader.mjs
+yarn.lock
+yarn.lock

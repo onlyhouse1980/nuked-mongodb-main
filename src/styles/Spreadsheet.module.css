@@ -1,0 +1,98 @@
+/* styles/Spreadsheet.module.css */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: rgb(58, 54, 54);
+  margin-bottom: 100px;
+}
+
+.th, .td {
+  padding: 5px;
+  text-align: center;
+  border: 1px solid #ddd;
+  color: white;
+  /* white-space: nowrap; Prevent text from wrapping */
+}
+
+.th, .td {
+  text-align: center;
+  padding: 5px;
+  color: white; /* Set font color to white */
+}
+
+.thead {
+  background-color: transparent;
+  font-weight: 900;
+}
+
+.tbody .tr:nth-child(even) {
+  background-color: #444;
+}
+
+.tbody .tr:nth-child(odd) {
+  background-color: #555;
+}
+
+.input {
+  background-color: lightgray;
+  color: black;
+  border: 1px black ;
+  width: 100%;
+}
+
+.button {
+  background-color: red;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  position: relative;
+  overflow: scroll;
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background-color: white;
+  transform: translateY(-50%);
+}
+
+.button:hover {
+  background-color: darkred;
+}
+
+.GreenButton {
+  background-color: darkgreen;
+  color: white;
+  margin-right: 3px;
+}
+
+.GreenButton:hover {
+  background-color: green;
+}
+
+.RedButton {
+  background-color: darkred;
+  color: white;
+  margin-right: 3px;
+  margin-left: 3px;
+}
+
+.RedButton:hover {
+  background-color: red;
+}
+
+.DeleteColumnButton {
+  background-image: url(http://localhost:3000px/Images/delete.png;);
+  background-color: transparent;
+}
