@@ -4,6 +4,7 @@ import { TextField, Button } from '@mui/material';
 import axios from 'axios';
 import styles from '../styles/Spreadsheet.module.css';
 import Image from 'next/image';
+import IconButton from '@mui/material/IconButton';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import SaveIcon from '@mui/icons-material/Save';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
@@ -105,8 +106,12 @@ const Spreadsheet = () => {
             <tr className={styles.tr} >
               {headers.map(header => (
                 <th className={styles.th}  key={header}>
+                   <div>
+                   <IconButton aria-label="delete" color="error">
+                   <DeleteForeverIcon onClick={() => handleRemoveColumn(header)} /></IconButton>
+                   </div>
                   {header}
-                  <Image src="/Images/delete.png" width="25" height="25" alt='Delete Icon' onClick={() => handleRemoveColumn(header)} />
+                 
                 </th>
               ))}
             </tr>
@@ -124,14 +129,17 @@ const Spreadsheet = () => {
                           color: 'white',
                           backgroundColor: 'blue',
                           border: 'none',
-                          width: '100%',
+                          width: '75px',
+                          align: 'center'
                         },
                       }}
                     />
                   </td>
                 ))}
                 <td className={styles.td} >
-                  <button variant="contained" startIcon={<DeleteForeverIcon />} onClick={() => handleRemoveRow(rowIndex)}>-</button>
+                <IconButton aria-label="delete" color="error">
+        <DeleteForeverIcon onClick={() => handleRemoveRow(rowIndex)}/>
+       </IconButton> 
                 </td>
               </tr>
             ))}
