@@ -24,7 +24,7 @@ export default function index(){
     <h2 className={styles.bgText}>
       <b>Community Group</b>
     </h2>
-    <p>Annual Meeting June 30th 12:00PM, 340 East Orchard Beach Dr.</p>
+    <h4>Annual Meeting June 30th 12:00PM, 340 East Orchard Beach Dr.</h4>
     </div>
   <div>
     <motion.div exit={{ opacity: 0 }} initial={{opacity: 0 }} animate={{opacity: 1 }}>
