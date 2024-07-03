@@ -1,4 +1,4 @@
-import Image from 'next/image'
+-import Image from 'next/image'
 import Head from 'next/head';
 import styles from '../styles/styles.module.css'
 import * as React from "react";
@@ -24,7 +24,7 @@ export default function index(){
     <h2 className={styles.bgText}>
       <b>Community Group</b>
     </h2>
-    <h4 className={styles.meeting}>Annual Meeting June 30th 12:00PM, 340 East Orchard Beach Dr.</h4>
+
     </div>
   <div>
     <motion.div exit={{ opacity: 0 }} initial={{opacity: 0 }} animate={{opacity: 1 }}>
