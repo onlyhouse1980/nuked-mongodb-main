@@ -1,4 +1,4 @@
--import Image from 'next/image'
+import Image from 'next/image'
 import Head from 'next/head';
 import styles from '../styles/styles.module.css'
 import * as React from "react";
