@@ -2,9 +2,8 @@ import Image from 'next/image'
 import Head from 'next/head';
 import styles from '../styles/styles.module.css'
 import * as React from "react";
-import { motion } from "framer-motion";
+import { motion, inView} from "framer-motion";
 import profileImage from "../../public/Images/WebPFiles/psound.webp"
-import { inView } from "framer-motion"
 
 const PhotoArray = []
 
