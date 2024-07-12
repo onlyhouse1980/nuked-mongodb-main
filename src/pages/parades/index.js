@@ -49,6 +49,13 @@ import { useCallback } from 'react';
         video_url:
           'https://res.cloudinary.com/dfnaxhqqq/video/upload/v1709113418/2023_Parade_fqpwlo.mp4#t=0.001',
       },
+      {
+        id: 7,
+        title: '2024 Parade',
+        url: 'parades/parade7',
+        video_url:
+          https://res.cloudinary.com/dqxg7ccdf/video/upload/v1720796591/Orchard_Beach_July_4_parade_2024_sbfa5a.mp4#t=0.001',
+      },
     ]
     const Parades = () => {
 
