@@ -29,9 +29,9 @@ const User = () => {
           const res = await fetch(`/api/users/${last_name}`);
           const data = await res.json();
           if (res.ok) {
-            setUser(user.data);
+            setUser(data.data);
           } else {
-            setError(user.message);
+            setError(data.message);
           }
         } catch (error) {
           setError('An error occurred while fetching the user.');
@@ -1837,9 +1837,9 @@ const User = () => {
     }
   }
 
-function August2024() {
-    let a = user.aug01_24
-    let b = user.jun01_24 
+  function August2024() {
+    let a = user.aug01_24 
+    let b = user.jun01_24
     let c = a - b
      
     
@@ -1947,7 +1947,7 @@ function August2024() {
             </thead>
             <tbody>
 
- {/* June 2024 */}
+              {/* June 2024 */}
               <tr>
                 <td className={styles.td3}>
                   <p className={styles.p}>Jun 2024</p>
@@ -1973,7 +1973,7 @@ function August2024() {
                     type="text"
                     name="utilized"
                     id="June2024"
-                    value={(user.aug01_24 - user.jun01_24)}
+                    value={(user.aug01_24 - user.jun01_24 )}
                     label="answers"
                     readOnly
                   ></input>
@@ -1996,7 +1996,7 @@ function August2024() {
                 <td className={styles.td3}>{August2024()}</td>
               </tr>
 
-          
+
               {/* April 2024 */}
               <tr>
                 <td className={styles.td3}>
