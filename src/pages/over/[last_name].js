@@ -1,8 +1,8 @@
-import { useRouter } from "next/router";
-import useSWR from "swr";
-import styles from "../over/[last_name].module.css";
-// import styles from '../../styles/globals.css'
+// pages/users/[last_name].js
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import Zoom from "react-reveal";
+import styles from "./[last_name].module.css";
 import * as React from "react";
 import BGBlack from "../../components/BGBlack";
 
@@ -14,40 +14,42 @@ var bgColors = {
   Red: "#E9573F",
   Yellow: "#F6BB42",
 };
-const fetcher = async (url) => {
-  const res = await fetch(url);
-  const data = await res.json();
 
-  if (res.status !== 200) {
-    throw new Error(data.message);
-  }
-  return data;
-};
+const User = () => {
+  const router = useRouter();
+  const { last_name } = router.query;
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-export default function Over() {
-  const { useState } = React;
+  useEffect(() => {
+    if (last_name) {
+      const fetchUser = async () => {
+        try {
+          const res = await fetch(`/api/users/${last_name}`);
+          const data = await res.json();
+          if (res.ok) {
+            setUser(data.data);
+          } else {
+            setError(data.message);
+          }
+        } catch (error) {
+          setError('An error occurred while fetching the user.');
+        } finally {
+          setLoading(false);
+        }
+      };
 
-  const { query } = useRouter();
-  const { data, error } = useSWR(
-    () => query.last_name && `/api/overuse/${query.last_name}`,
-    fetcher
-  );
+      fetchUser();
+    }
+  }, [last_name]);
 
-  if (error) return <div>Last Name not found. </div>;
-  if (!data) return <div>Loading...</div>;
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
-  const arr = [data];
-  console.log(arr.length);
-
-  function moreInfo(props) {
-    let info1 = parseInt(document.getElementById("info1").value);
-    let info2 = parseInt(document.getElementById("info2").value);
-    var Answer = document.getElementById("Percent");
-    Answer.value = (((info1 - info2) / 6000) * 1).toFixed(2);
-  }
 
   function galOverAugust() {
-    if (data.oct07_20 - data.aug10_20 > 6000) {
+    if (user.oct07_20 - user.aug10_20 > 6000) {
       return;
 
       <input
@@ -59,7 +61,7 @@ export default function Over() {
         type="text"
         name="utilized"
         id="augOver1"
-        value={data.oct07_20 - data.aug10_20 - 6000}
+        value={user.oct07_20 - user.aug10_20 - 6000}
         label="galOver1"
         readOnly
       ></input>;
@@ -83,7 +85,7 @@ export default function Over() {
   }
 
   function galOverAugustFees() {
-    let x = data.oct07_20 - data.aug10_20;
+    let x = user.oct07_20 - user.aug10_20;
     if (x > 6000 && x < 10000) {
       return (
         <input
@@ -150,7 +152,7 @@ export default function Over() {
   }
 
   function galOverOctober() {
-    if (data.dec10_20 - data.oct07_20 > 6000) {
+    if (user.dec10_20 - user.oct07_20 > 6000) {
       return (
         <input
           style={{
@@ -161,7 +163,7 @@ export default function Over() {
           type="text"
           name="utilized"
           id="octOver"
-          value={data.dec10_20 - data.oct07_20 - 6000}
+          value={user.dec10_20 - user.oct07_20 - 6000}
           label="galOver"
           readOnly
         ></input>
@@ -186,7 +188,7 @@ export default function Over() {
   }
 
   function galOverOctoberFees() {
-    let x = data.dec10_20 - data.oct07_20;
+    let x = user.dec10_20 - user.oct07_20;
     if (x > 6000 && x < 10000) {
       return (
         <input
@@ -253,7 +255,7 @@ export default function Over() {
   }
 
   function galOverDecember() {
-    if (data.feb19_21 - data.dec10_20 > 6000) {
+    if (user.feb19_21 - user.dec10_20 > 6000) {
       return (
         <input
           style={{
@@ -264,7 +266,7 @@ export default function Over() {
           type="text"
           name="utilized"
           id="decOver"
-          value={data.feb19_21 - data.dec10_20 - 6000}
+          value={user.feb19_21 - user.dec10_20 - 6000}
           label="galOver"
           readOnly
         ></input>
@@ -289,7 +291,7 @@ export default function Over() {
   }
 
   function galOverDecemberFees() {
-    let x = data.feb19_21 - data.dec10_20;
+    let x = user.feb19_21 - user.dec10_20;
     if (x > 6000 && x < 10000) {
       return (
         <input
@@ -356,7 +358,7 @@ export default function Over() {
   }
 
   function galOverFebruary() {
-    if (data.apr05_21 - data.feb19_21 > 6000) {
+    if (user.apr05_21 - user.feb19_21 > 6000) {
       return (
         <input
           style={{
@@ -367,7 +369,7 @@ export default function Over() {
           type="text"
           name="utilized"
           id="febOver"
-          value={data.apr05_21 - data.feb19_21 - 6000}
+          value={user.apr05_21 - user.feb19_21 - 6000}
           label="galOver"
           readOnly
         ></input>
@@ -392,7 +394,7 @@ export default function Over() {
   }
 
   function galOverFebruaryFees() {
-    let x = data.apr05_21 - data.feb19_21;
+    let x = user.apr05_21 - user.feb19_21;
     if (x > 6000 && x < 10000) {
       return (
         <input
@@ -459,7 +461,7 @@ export default function Over() {
   }
 
   function galOverApril21() {
-    if (data.jun04_21 - data.apr05_21 > 6000) {
+    if (user.jun04_21 - user.apr05_21 > 6000) {
       return (
         <input
           style={{
@@ -470,7 +472,7 @@ export default function Over() {
           type="text"
           name="utilized"
           id="aprOver"
-          value={data.jun04_21 - data.apr05_21 - 6000}
+          value={user.jun04_21 - user.apr05_21 - 6000}
           label="galOver"
           readOnly
         ></input>
@@ -495,7 +497,7 @@ export default function Over() {
   }
 
   function galOverAprilFees21() {
-    let x = data.jun04_21 - data.apr05_21;
+    let x = user.jun04_21 - user.apr05_21;
     if (x > 6000 && x < 10000) {
       return (
         <input
@@ -562,7 +564,7 @@ export default function Over() {
   }
 
   function galOverJune21() {
-    if (data.aug04_21 - data.jun04_21 > 6000) {
+    if (user.aug04_21 - user.jun04_21 > 6000) {
       return (
         <input
           style={{
@@ -573,7 +575,7 @@ export default function Over() {
           type="text"
           name="utilized"
           id="junOver"
-          value={data.aug04_21 - data.jun04_21 - 6000}
+          value={user.aug04_21 - user.jun04_21 - 6000}
           label="galOver"
           readOnly
         ></input>
@@ -598,7 +600,7 @@ export default function Over() {
   }
 
   function galOverJuneFees21() {
-    let x = data.aug04_21 - data.jun04_21;
+    let x = user.aug04_21 - user.jun04_21;
     if (x > 6000 && x < 10000) {
       return (
         <input
@@ -665,7 +667,7 @@ export default function Over() {
   }
 
   function galOverAugust21() {
-    if (data.oct03_21 - data.aug04_21 > 6000) {
+    if (user.oct03_21 - user.aug04_21 > 6000) {
       return (
         <input
           style={{
@@ -676,7 +678,7 @@ export default function Over() {
           type="text"
           name="utilized"
           id="augOver"
-          value={data.oct03_21 - data.aug04_21 - 6000}
+          value={user.oct03_21 - user.aug04_21 - 6000}
           label="galOver"
           readOnly
         ></input>
@@ -701,7 +703,7 @@ export default function Over() {
   }
 
   function galOverAugustFees21() {
-    let x = data.oct03_21 - data.aug04_21;
+    let x = user.oct03_21 - user.aug04_21;
     if (x > 6000 && x < 10000) {
       return (
         <input
@@ -768,7 +770,7 @@ export default function Over() {
   }
 
   function galOverOctober21() {
-    if (data.dec03_21 - data.oct03_21 > 6000) {
+    if (user.dec03_21 - user.oct03_21 > 6000) {
       return (
         <input
           style={{
@@ -779,7 +781,7 @@ export default function Over() {
           type="text"
           name="utilized"
           id="octOver"
-          value={data.dec03_21 - data.oct03_21 - 6000}
+          value={user.dec03_21 - user.oct03_21 - 6000}
           label="galOver"
           readOnly
         ></input>
@@ -804,7 +806,7 @@ export default function Over() {
   }
 
   function galOverOctoberFees21() {
-    let x = data.dec03_21 - data.oct03_21;
+    let x = user.dec03_21 - user.oct03_21;
     if (x > 6000 && x < 10000) {
       return (
         <input
@@ -871,7 +873,7 @@ export default function Over() {
   }
 
   function galOverDecember21() {
-    if (data.feb04_22 - data.dec03_21 > 6000) {
+    if (user.feb04_22 - user.dec03_21 > 6000) {
       return (
         <input
           style={{
@@ -882,7 +884,7 @@ export default function Over() {
           type="text"
           name="utilized"
           id="dec21Over"
-          value={data.feb04_22 - data.dec03_21 - 6000}
+          value={user.feb04_22 - user.dec03_21 - 6000}
           label="galOver"
           readOnly
         ></input>
@@ -907,7 +909,7 @@ export default function Over() {
   }
 
   function galOverDecemberFees21() {
-    let x = data.feb04_22 - data.dec03_21;
+    let x = user.feb04_22 - user.dec03_21;
     if (x > 6000 && x < 10000) {
       return (
         <input
@@ -977,7 +979,7 @@ export default function Over() {
   // ****FEBRUARY******
 
   function galOverFebruary22() {
-    if (data.apr07_22 - data.feb04_22 > 6000) {
+    if (user.apr07_22 - user.feb04_22 > 6000) {
       return (
         <input
           style={{
@@ -988,7 +990,7 @@ export default function Over() {
           type="text"
           name="utilized"
           id="feb22Over"
-          value={data.apr07_22 - data.feb04_22 - 6000}
+          value={user.apr07_22 - user.feb04_22 - 6000}
           label="galOver"
           readOnly
         ></input>
@@ -1013,7 +1015,7 @@ export default function Over() {
   }
 
   function galOverFebruaryFees22() {
-    let x = data.apr07_22 - data.feb04_22;
+    let x = user.apr07_22 - user.feb04_22;
     if (x > 6000 && x < 10000) {
       return (
         <input
@@ -1083,7 +1085,7 @@ export default function Over() {
   // ******APRIL******
 
   function galOverApril22() {
-    if (data.jun07_22 - data.apr07_22 > 6000) {
+    if (user.jun07_22 - user.apr07_22 > 6000) {
       return (
         <input
           style={{
@@ -1094,7 +1096,7 @@ export default function Over() {
           type="text"
           name="utilized"
           id="apr22Over"
-          value={data.jun07_22 - data.apr07_22 - 6000}
+          value={user.jun07_22 - user.apr07_22 - 6000}
           label="galOver"
           readOnly
         ></input>
@@ -1119,7 +1121,7 @@ export default function Over() {
   }
 
   function galOverAprilFees22() {
-    let x = data.jun07_22 - data.apr07_22;
+    let x = user.jun07_22 - user.apr07_22;
     if (x > 6000 && x < 10000) {
       return (
         <input
@@ -1189,7 +1191,7 @@ export default function Over() {
   // ******JUNE******
 
   function galOverJune22() {
-    if (data.aug05_22 - data.jun07_22 > 8000) {
+    if (user.aug05_22 - user.jun07_22 > 8000) {
       return (
         <input
           style={{
@@ -1200,7 +1202,7 @@ export default function Over() {
           type="text"
           name="utilized"
           id="apr22Over"
-          value={data.aug05_22 - data.jun07_22 - 8000}
+          value={user.aug05_22 - user.jun07_22 - 8000}
           label="galOver"
           readOnly
         ></input>
@@ -1225,8 +1227,8 @@ export default function Over() {
   }
 
   function yearlyIncluded() {
-    let a = data.aug05_22 - data.jun07_22;
-    let b = data.oct07_22 - data.aug05_22;
+    let a = user.aug05_22 - user.jun07_22;
+    let b = user.oct07_22 - user.aug05_22;
 
     let costFree = 48000;
     let rmn = costFree - a;
@@ -1271,8 +1273,8 @@ export default function Over() {
   // ******AUGUST*****
 
   function afterAugust() {
-    let a = data.aug05_22 - data.jun07_22;
-    let b = data.oct07_22 - data.aug05_22;
+    let a = user.aug05_22 - user.jun07_22;
+    let b = user.oct07_22 - user.aug05_22;
     let total2 = a + b;
     let costFree = 48000;
     let rmn = costFree - total2;
@@ -1317,9 +1319,9 @@ export default function Over() {
   // ******OCTOBER******
 
   function afterOctober() {
-    let a = data.aug05_22 - data.jun07_22;
-    let b = data.oct07_22 - data.aug05_22;
-    let c = data.dec09_22 - data.oct07_22;
+    let a = user.aug05_22 - user.jun07_22;
+    let b = user.oct07_22 - user.aug05_22;
+    let c = user.dec09_22 - user.oct07_22;
     let total2 = a + b + c;
     let costFree = 48000;
     let rmn = costFree - total2;
@@ -1364,10 +1366,10 @@ export default function Over() {
   // ****DECEMBER
 
   function afterDecember() {
-    let a = data.aug05_22 - data.jun07_22;
-    let b = data.oct07_22 - data.aug05_22;
-    let c = data.dec09_22 - data.oct07_22;
-    let d = data.feb04_23 - data.dec09_22;
+    let a = user.aug05_22 - user.jun07_22;
+    let b = user.oct07_22 - user.aug05_22;
+    let c = user.dec09_22 - user.oct07_22;
+    let d = user.feb04_23 - user.dec09_22;
     let total3 = a + b + c + d;
     let costFree = 48000;
     let rmn = costFree - total3;
@@ -1412,11 +1414,11 @@ export default function Over() {
   // ***FEBRUARY 2023***
 
   function afterFebruary() {
-    let a = data.aug05_22 - data.jun07_22;
-    let b = data.oct07_22 - data.aug05_22;
-    let c = data.dec09_22 - data.oct07_22;
-    let d = data.feb04_23 - data.dec09_22;
-    let e = data.apr06_23 - data.feb04_23;
+    let a = user.aug05_22 - user.jun07_22;
+    let b = user.oct07_22 - user.aug05_22;
+    let c = user.dec09_22 - user.oct07_22;
+    let d = user.feb04_23 - user.dec09_22;
+    let e = user.apr06_23 - user.feb04_23;
     let total4 = a + b + c + d + e;
     let costFree = 48000;
     let rmn = costFree - total4;
@@ -1461,12 +1463,12 @@ export default function Over() {
   // ***April 2023***
 
   function afterApril() {
-    let a = data.aug05_22 - data.jun07_22;
-    let b = data.oct07_22 - data.aug05_22;
-    let c = data.dec09_22 - data.oct07_22;
-    let d = data.feb04_23 - data.dec09_22;
-    let e = data.apr06_23 - data.feb04_23;
-    let f = data.jun05_23 - data.apr06_23;
+    let a = user.aug05_22 - user.jun07_22;
+    let b = user.oct07_22 - user.aug05_22;
+    let c = user.dec09_22 - user.oct07_22;
+    let d = user.feb04_23 - user.dec09_22;
+    let e = user.apr06_23 - user.feb04_23;
+    let f = user.jun05_23 - user.apr06_23;
     let total5 = a + b + c + d + e + f;
     let costFree = 48000;
     let rmn = costFree - total5;
@@ -1511,7 +1513,7 @@ export default function Over() {
   // ***June 2023***
 
   function afterJune23() {
-    let g = data.aug02_23 - data.jun05_23;
+    let g = user.aug02_23 - user.jun05_23;
     let total6 = g;
     let costFree = 6000;
     let rmn = costFree - total6;
@@ -1556,7 +1558,7 @@ export default function Over() {
   // ***August 2023***
 
   function afterAugust23() {
-    let h = data.oct05_23 - data.aug02_23;
+    let h = user.oct05_23 - user.aug02_23;
     let total7 = h;
     let costFree = 6000;
     let rmn = costFree - total7;
@@ -1599,11 +1601,11 @@ export default function Over() {
   }
 
   function galOverFees22() {
-    let a = data.aug05_22 - data.jun07_22;
-    let b = data.oct07_22 - data.aug05_22;
-    let c = data.dec09_22 - data.oct07_22;
-    let d = data.feb04_23 - data.dec09_22;
-    let e = data.apr6_23 - data.feb04_23;
+    let a = user.aug05_22 - user.jun07_22;
+    let b = user.oct07_22 - user.aug05_22;
+    let c = user.dec09_22 - user.oct07_22;
+    let d = user.feb04_23 - user.dec09_22;
+    let e = user.apr6_23 - user.feb04_23;
     let totalYearUsed = a + b + c + d + e;
     let rmn = 48000 - totalYearUsed;
 
@@ -1648,8 +1650,8 @@ export default function Over() {
 
   
   function december2023() {
-    let a = data.dec04_23 
-    let b = data.oct05_23
+    let a = user.dec04_23 
+    let b = user.oct05_23
     let c = a - b
      
     
@@ -1694,8 +1696,8 @@ export default function Over() {
     }
   }
   function February2024() {
-    let a = data.feb02_24 
-    let b = data.dec04_23
+    let a = user.feb02_24 
+    let b = user.dec04_23
     let c = a - b
      
     
@@ -1741,8 +1743,8 @@ export default function Over() {
   }
 
   function April2024() {
-    let a = data.apr01_24 
-    let b = data.feb02_24
+    let a = user.apr01_24 
+    let b = user.feb02_24
     let c = a - b
      
     
@@ -1787,9 +1789,10 @@ export default function Over() {
     }
   }
 
+
   function June2024() {
-    let a = data.jun01_24 
-    let b = data.apr01_24
+    let a = user.jun01_24 
+    let b = user.apr01_24
     let c = a - b
      
     
@@ -1834,9 +1837,9 @@ export default function Over() {
     }
   }
 
-function August2024() {
-    let a = data.aug01_24
-    let b = data.jun01_24 
+  function August2024() {
+    let a = user.aug01_24 
+    let b = user.jun01_24
     let c = a - b
      
     
@@ -1883,8 +1886,6 @@ function August2024() {
 
 
   return (
-    // END OF FUNCTIONS BEGINNING OF PAGE DESIGN
-
     <main
       style={{
         width: "100vw",
@@ -1899,7 +1900,7 @@ function August2024() {
       <Zoom top cascade>
         <div className={styles.title}>
           <h1 className={styles.pageheader}>
-            👤 <em>{data.last_name}</em>
+            👤 <em>{user.last_name}</em>
           </h1>
         </div>
         <div>
@@ -1917,7 +1918,7 @@ function August2024() {
                 </td>
                 <td>
                   <p style={{ fontWeight: "900" }} className={styles.th2}>
-                    #{data.meter_serialNum}
+                    #{user.meter_serialNum}
                   </p>
                 </td>
               </tr>
@@ -1946,7 +1947,7 @@ function August2024() {
             </thead>
             <tbody>
 
-          {/* June 2024 */}
+              {/* June 2024 */}
               <tr>
                 <td className={styles.td3}>
                   <p className={styles.p}>Jun 2024</p>
@@ -1972,7 +1973,7 @@ function August2024() {
                     type="text"
                     name="utilized"
                     id="June2024"
-                    value={(data.aug01_24 - data.jun01_24)}
+                    value={(user.aug01_24 - user.jun01_24 )}
                     label="answers"
                     readOnly
                   ></input>
@@ -1987,7 +1988,7 @@ function August2024() {
                     type="text"
                     name="utilized"
                     id="June2024"
-                    value={(6000 - (data.aug01_24 - data.jun01_24))*-1}
+                    value={(6000 - (user.aug01_24 - user.jun01_24))*-1}
                     label="answers"
                     readOnly
                   ></input>
@@ -1995,7 +1996,7 @@ function August2024() {
                 <td className={styles.td3}>{August2024()}</td>
               </tr>
 
-            
+
               {/* April 2024 */}
               <tr>
                 <td className={styles.td3}>
@@ -2022,7 +2023,7 @@ function August2024() {
                     type="text"
                     name="utilized"
                     id="April2024"
-                    value={(data.jun01_24 - data.apr01_24 )}
+                    value={(user.jun01_24 - user.apr01_24 )}
                     label="answers"
                     readOnly
                   ></input>
@@ -2037,7 +2038,7 @@ function August2024() {
                     type="text"
                     name="utilized"
                     id="April2024"
-                    value={(6000 - (data.jun01_24 - data.apr01_24))*-1}
+                    value={(6000 - (user.jun01_24 - user.apr01_24))*-1}
                     label="answers"
                     readOnly
                   ></input>
@@ -2073,7 +2074,7 @@ function August2024() {
                     type="text"
                     name="utilized"
                     id="December2023"
-                    value={(data.apr01_24 - data.feb02_24 )}
+                    value={(user.apr01_24 - user.feb02_24 )}
                     label="answers"
                     readOnly
                   ></input>
@@ -2088,7 +2089,7 @@ function August2024() {
                     type="text"
                     name="utilized"
                     id="February2024"
-                    value={(6000 - (data.apr01_24 - data.feb02_24))*-1}
+                    value={(6000 - (user.apr01_24 - user.feb02_24))*-1}
                     label="answers"
                     readOnly
                   ></input>
@@ -2122,7 +2123,7 @@ function August2024() {
                     type="text"
                     name="utilized"
                     id="December2023"
-                    value={(data.feb02_24 - data.dec04_23 )}
+                    value={(user.feb02_24 - user.dec04_23 )}
                     label="answers"
                     readOnly
                   ></input>
@@ -2137,7 +2138,7 @@ function August2024() {
                     type="text"
                     name="utilized"
                     id="December2023"
-                    value={(6000 - (data.feb02_24 - data.dec04_23))*-1}
+                    value={(6000 - (user.feb02_24 - user.dec04_23))*-1}
                     label="answers"
                     readOnly
                   ></input>
@@ -2170,7 +2171,7 @@ function August2024() {
                     type="text"
                     name="utilized"
                     id="October2023"
-                    value={(data.dec04_23 - data.oct05_23)}
+                    value={(user.dec04_23 - user.oct05_23)}
                     label="answers"
                     readOnly
                   ></input>
@@ -2185,7 +2186,7 @@ function August2024() {
                     type="text"
                     name="utilized"
                     id="October2023"
-                    value={(6000 - (data.dec04_23 - data.oct05_23))*-1}
+                    value={(6000 - (user.dec04_23 - user.oct05_23))*-1}
                     label="answers"
                     readOnly
                   ></input>
@@ -2248,7 +2249,7 @@ function August2024() {
                     type="text"
                     name="utilized"
                     id="August2023"
-                    value={data.oct05_23 - data.aug02_23}
+                    value={user.oct05_23 - user.aug02_23}
                     label="answers"
                     readOnly
                   ></input>
@@ -2282,7 +2283,7 @@ function August2024() {
                     type="text"
                     name="utilized"
                     id="February2023"
-                    value={data.aug02_23 - data.jun05_23}
+                    value={user.aug02_23 - user.jun05_23}
                     label="answers"
                     readOnly
                   ></input>
@@ -2322,7 +2323,7 @@ function August2024() {
                     type="text"
                     name="utilized"
                     id="February2023"
-                    value={data.jun05_23 - data.apr06_23}
+                    value={user.jun05_23 - user.apr06_23}
                     label="answers"
                     readOnly
                   ></input>
@@ -2356,7 +2357,7 @@ function August2024() {
                     type="text"
                     name="utilized"
                     id="February2023"
-                    value={data.apr06_23 - data.feb04_23}
+                    value={user.apr06_23 - user.feb04_23}
                     label="answers"
                     readOnly
                   ></input>
@@ -2390,7 +2391,7 @@ function August2024() {
                     type="text"
                     name="utilized"
                     id="December2022"
-                    value={data.feb04_23 - data.dec09_22}
+                    value={user.feb04_23 - user.dec09_22}
                     label="answers"
                     readOnly
                   ></input>
@@ -2424,7 +2425,7 @@ function August2024() {
                     type="text"
                     name="utilized"
                     id="October2022"
-                    value={data.dec09_22 - data.oct07_22}
+                    value={user.dec09_22 - user.oct07_22}
                     label="answers"
                     readOnly
                   ></input>
@@ -2458,7 +2459,7 @@ function August2024() {
                     type="text"
                     name="utilized"
                     id="August2022"
-                    value={data.oct07_22 - data.aug05_22}
+                    value={user.oct07_22 - user.aug05_22}
                     label="answers"
                     readOnly
                   ></input>
@@ -2492,7 +2493,7 @@ function August2024() {
                     type="text"
                     name="utilized"
                     id="June2022"
-                    value={data.aug05_22 - data.jun07_22}
+                    value={user.aug05_22 - user.jun07_22}
                     label="answers"
                   ></input>
                 </td>
@@ -2516,7 +2517,7 @@ function August2024() {
                     type="text"
                     name="utilized"
                     id="yearTotal"
-                    value={data.year_total}
+                    value={user.year_total}
                     label="answers"
                     readOnly
                   ></input>
@@ -2550,7 +2551,7 @@ function August2024() {
                     name="fees"
                     id="2223"
                     /*chech this one for error*/
-                    value={data.fees}
+                    value={user.fees}
                     label="results"
                     readOnly
                   ></input>
@@ -2603,7 +2604,7 @@ function August2024() {
                     type="text"
                     name="utilized"
                     id="April2022"
-                    value={data.jun07_22 - data.apr07_22}
+                    value={user.jun07_22 - user.apr07_22}
                     label="answers"
                     readOnly
                   ></input>
@@ -2638,7 +2639,7 @@ function August2024() {
                     type="text"
                     name="utilized"
                     id="February2022"
-                    value={data.apr07_22 - data.feb04_22}
+                    value={user.apr07_22 - user.feb04_22}
                     label="answers"
                     readOnly
                   ></input>
@@ -2673,7 +2674,7 @@ function August2024() {
                     type="text"
                     name="utilized"
                     id="December2021"
-                    value={data.feb04_22 - data.dec03_21}
+                    value={user.feb04_22 - user.dec03_21}
                     label="answers"
                     readOnly
                   ></input>
@@ -2708,7 +2709,7 @@ function August2024() {
                     type="text"
                     name="utilized"
                     id="October2021"
-                    value={data.dec03_21 - data.oct03_21}
+                    value={user.dec03_21 - user.oct03_21}
                     label="answers"
                     readOnly
                   ></input>
@@ -2743,7 +2744,7 @@ function August2024() {
                     type="text"
                     name="utilized"
                     id="August2021"
-                    value={data.oct03_21 - data.aug04_21}
+                    value={user.oct03_21 - user.aug04_21}
                     label="answers"
                     readOnly
                   ></input>
@@ -2778,7 +2779,7 @@ function August2024() {
                     type="text"
                     name="utilized"
                     id="June2021"
-                    value={data.aug04_21 - data.jun04_21}
+                    value={user.aug04_21 - user.jun04_21}
                     label="answers"
                     readOnly
                   ></input>
@@ -2813,7 +2814,7 @@ function August2024() {
                     type="text"
                     name="utilized"
                     id="April2021"
-                    value={data.jun04_21 - data.apr05_21}
+                    value={user.jun04_21 - user.apr05_21}
                     label="answers"
                     readOnly
                   ></input>
@@ -2850,7 +2851,7 @@ function August2024() {
                     type="text"
                     name="utilized"
                     id="February2021"
-                    value={data.apr05_21 - data.feb19_21}
+                    value={user.apr05_21 - user.feb19_21}
                     label="answers"
                     readOnly
                   ></input>
@@ -2885,7 +2886,7 @@ function August2024() {
                     type="text"
                     name="utilized"
                     id="December2020"
-                    value={data.feb19_21 - data.dec10_20}
+                    value={user.feb19_21 - user.dec10_20}
                     label="answers"
                     readOnly
                   ></input>
@@ -2920,7 +2921,7 @@ function August2024() {
                     type="text"
                     name="utilized"
                     id="October2020"
-                    value={data.dec10_20 - data.oct07_20}
+                    value={user.dec10_20 - user.oct07_20}
                     label="answers"
                     readOnly
                   ></input>
@@ -2955,7 +2956,7 @@ function August2024() {
                     type="text"
                     name="utilized"
                     id="August2020"
-                    value={data.oct07_20 - data.aug10_20}
+                    value={user.oct07_20 - user.aug10_20}
                     label="answers"
                     readOnly
                   ></input>
@@ -2970,4 +2971,6 @@ function August2024() {
       </Zoom>
     </main>
   );
-}
+};
+
+export default User;
