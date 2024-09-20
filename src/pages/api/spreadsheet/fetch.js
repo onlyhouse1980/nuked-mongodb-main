@@ -4,8 +4,8 @@ import clientPromise from '../../../../lib/mongodb';
 export default async function handler(req, res) {
   try {
     const client = await clientPromise;
-    const db = client.db('fullstack');
-    const collection = db.collection('meterreads');
+    const db = client.db('mydatabase');
+    const collection = db.collection('users');
     
     const data = await collection.find({}).sort({ _id: 1 }).toArray();
     console.log('Data fetched:', data);
