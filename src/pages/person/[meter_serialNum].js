@@ -1,12 +1,13 @@
-import { useRouter } from "next/router";
-import useSWR from "swr";
-import styles from "../person/[meter_serialNum].module.css";
-import Zoom from "react-reveal/Zoom";
-import React, { useState } from "react";
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import Zoom from "react-reveal";
+import styles from "../over/[last_name].module.css";
+import * as React from "react";
+import BGBlack from "../../components/BGBlack";
 
 import { MDBBtn } from "mdbreact";
 
-<div suppressHydrationWarning={true}>{process.browser}</div>;
+//<div suppressHydrationWarning={true}>{process.browser}</div>;
 var bgColors = {
   Default: "#81b71a",
   Blue: "#00B1E1",
@@ -15,34 +16,37 @@ var bgColors = {
   Red: "#E9573F",
   Yellow: "#F6BB42",
 };
-const fetcher = async (url) => {
-  const res = await fetch(url);
-  const data = await res.json();
+const User = () => {
+  const router = useRouter();
+  const { meter_serialNum } = router.query;
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  if (res.status !== 200) {
-    throw new Error(data.message);
-  }
-  return data;
-};
+  useEffect(() => {
+    if (meter_serialNum) {
+      const fetchUser = async () => {
+        try {
+          const res = await fetch(`/api/people/${meter_serialNum}`);
+          const data = await res.json();
+          if (res.ok) {
+            setUser(data.data);
+          } else {
+            setError(data.message);
+          }
+        } catch (error) {
+          setError('An error occurred while fetching the user.');
+        } finally {
+          setLoading(false);
+        }
+      };
 
-export default function Person() {
-  const { query } = useRouter();
-  const { data, error } = useSWR(
-    () => query.meter_serialNum && `/api/people/${query.meter_serialNum}`,
-    fetcher
-  );
-  if (error)
-    return (
-      <div>
-        <p>
-          Serial number not found. Please review{" "}
-          <a href="/howtoreadmeter.pdf">
-            <b>How to read your meter</b>
-          </a>
-        </p>
-      </div>
-    );
-  if (!data) return <div>Loading...</div>;
+      fetchUser();
+    }
+  }, [meter_serialNum]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   function sayHi() {
     let info1 = parseInt(document.getElementById("info1").value);
@@ -75,13 +79,13 @@ export default function Person() {
             <tr>
               <th className={styles.th2}>
                 <h4>
-                  <span> Meter Serial # : {data.meter_serialNum}</span>
+                  <span> Meter Serial # : {user.meter_serialNum}</span>
                   <br />
                 </h4>
               </th>
               <th className={styles.th2}>
                 <h4>
-                  <span>{data.last_name} </span>
+                  <span>{user.last_name} </span>
                 </h4>
               </th>
             </tr>
@@ -124,7 +128,7 @@ export default function Person() {
             <tr>
               <td className={styles.td3}>
                 <p className={styles.p}></p>
-                <p className={styles.p}>Last reading by Vendor - August 01, 2024</p>
+                <p className={styles.p}>Last reading by Vendor - December 04, 2023</p>
               </td>
               <td className={styles.td3}>
                 <input
@@ -133,8 +137,8 @@ export default function Person() {
                   }}
                   type="text"
                   id="info2"
-                  label="August 01, 2024"
-                  value={data.aug01_24}
+                  label="August 02, 2022"
+                  value={user.dec04_23}
                   readOnly
                 />
               </td>
@@ -142,7 +146,7 @@ export default function Person() {
             <tr>
               <td className={styles.td3}>
                 <p className={styles.p}>
-                  Gallons used since August 01, 2024.
+                  Gallons used since December 04, 2023.
                 </p>
               </td>
               <td className={styles.td3}>
@@ -184,3 +188,5 @@ export default function Person() {
     </>
   );
 }
+
+export default User
