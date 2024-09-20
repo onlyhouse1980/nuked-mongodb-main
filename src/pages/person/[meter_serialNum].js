@@ -124,7 +124,7 @@ export default function Person() {
             <tr>
               <td className={styles.td3}>
                 <p className={styles.p}></p>
-                <p className={styles.p}>Last reading by Vendor - December 04, 2023</p>
+                <p className={styles.p}>Last reading by Vendor - August 01, 2024</p>
               </td>
               <td className={styles.td3}>
                 <input
@@ -133,8 +133,8 @@ export default function Person() {
                   }}
                   type="text"
                   id="info2"
-                  label="August 02, 2022"
-                  value={data.dec04_23}
+                  label="August 01, 2024"
+                  value={data.aug01_24}
                   readOnly
                 />
               </td>
@@ -142,7 +142,7 @@ export default function Person() {
             <tr>
               <td className={styles.td3}>
                 <p className={styles.p}>
-                  Gallons used since December 04, 2023.
+                  Gallons used since August 01, 2024.
                 </p>
               </td>
               <td className={styles.td3}>
