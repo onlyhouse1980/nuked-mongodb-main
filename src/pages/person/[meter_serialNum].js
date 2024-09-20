@@ -1,9 +1,10 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Zoom from "react-reveal";
-import styles from "../over/[last_name].module.css";
+import styles from "./[meter_serialNum].module.css";
 import * as React from "react";
 import BGBlack from "../../components/BGBlack";
+import Link from 'next/link'
 
 import { MDBBtn } from "mdbreact";
 
@@ -128,7 +129,7 @@ const User = () => {
             <tr>
               <td className={styles.td3}>
                 <p className={styles.p}></p>
-                <p className={styles.p}>Last reading by Vendor - August 01, 2024</p>
+                <p className={styles.p}>Last reading - August 01, 2024</p>
               </td>
               <td className={styles.td3}>
                 <input
@@ -167,10 +168,10 @@ const User = () => {
             <tr>
               <td className={styles.h5head}>
                 <h5>
-                  *If you are having problems with the
+                  *If you are having problems with this
                   <br />
                   form, we recommend reading &quot;
-                  <a href="/howtoreadmeter.pdf">How to read your meter?</a>
+                  <Link href="/howtoreadmeter.pdf">How to read your meter?</Link>
                   &quot;{" "}
                 </h5>
               </td>
@@ -181,8 +182,8 @@ const User = () => {
       </Zoom>
 
       <style jsx>{`
-        a {
-          color: teal;
+        Link {
+          color: red;
         }
       `}</style>
     </>
