@@ -3,13 +3,13 @@ import clientPromise from '../../../../lib/mongodb';
 
 export default async function handler(req, res) {
   const client = await clientPromise;
-  const db = client.db('mydatabase');
+  const db = client.db('meter');
 
   const { last_name } = req.query;
 
   if (req.method === 'GET') {
     try {
-      const user = await db.collection('users').findOne({ last_name: last_name });
+      const user = await db.collection('readings').findOne({ last_name: last_name });
       if (user) {
         res.status(200).json({ status: 200, data: user });
       } else {
