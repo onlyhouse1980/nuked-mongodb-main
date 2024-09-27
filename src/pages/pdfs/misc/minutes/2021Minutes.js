@@ -3,7 +3,7 @@ import styles from "./2023Minutes.module.css";
 
 export const App = () => {
   const [embedURL] = useState(
-    "https://drive.google.com/file/d/1Ya3UAOaicqwgq7lznpTOHSWNmx62IquO/preview"
+    "https://drive.google.com/file/d/1vZs0nYPFSMLJtXhJBxeuJK5BNEpN4zBW/preview"
   );
   return (
     <div className={styles.container}>
