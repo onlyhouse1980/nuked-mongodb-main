@@ -27,7 +27,7 @@ const Spreadsheet = () => {
       if (fetchedData.length > 0) {
         const allHeaders = Object.keys(fetchedData[0]);
         const specificHeaders = ['last_name', 'meter_serialNum'];
-        const last10Headers = allHeaders.filter(header => !specificHeaders.includes(header)).slice(-10);
+        const last10Headers = allHeaders.filter(header => !specificHeaders.includes(header)).slice(-40);
         const finalHeaders = [...specificHeaders, ...last10Headers];
         const finalData = fetchedData.map(row => {
           const newRow = {};
@@ -53,7 +53,7 @@ const Spreadsheet = () => {
     const newHeader = prompt('Enter column name:');
     if (newHeader) {
       setHeaders(prevHeaders => {
-        const newHeaders = [...prevHeaders, newHeader].slice(-12);
+        const newHeaders = [...prevHeaders, newHeader].slice(-40);
         setData(data.map(row => ({ ...row, [newHeader]: '' })).map(row => {
           const newRow = {};
           newHeaders.forEach(header => {
