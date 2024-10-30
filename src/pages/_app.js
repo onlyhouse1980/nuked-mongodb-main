@@ -7,6 +7,7 @@ import '../styles/globals.css'
 import "../css/customcss.css";
 import "@fortawesome/fontawesome-svg-core/styles.css"; // import Font Awesome CSS
 import { config } from "@fortawesome/fontawesome-svg-core";
+import "../components/Marquee.scss";
 config.autoAddCss = false; 
 
 import PropTypes from 'prop-types';
