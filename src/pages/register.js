@@ -14,7 +14,7 @@ import { motion } from 'framer-motion'
 import React from 'react'
 import { MDBAnimation } from "mdbreact";
 import useSWR from 'swr';
-import Marquee from "react-fast-marquee"
+import Marquee, { MarqueeProps } from "../components/Marquee";
 import Link from "next/link"
 
 export default function Register() {
@@ -31,7 +31,7 @@ export default function Register() {
       {/* <MDBAnimation type="flash" infinite>
       <a className={styles.a} href="/howtoreadmeter.pdf">How to read your meter?</a>
         </MDBAnimation>*/}
-  <Marquee className='z=100 drop-shadow-md' speed="50">
+  <Marquee className='z=100 drop-shadow-md' speed="10">
       <h5 className='text-white z=100 drop-shadow-md'><Link className='text-white underline' href="/howtoreadmeter.pdf">If you are having trouble getting your usage... READ: How to read your meter?&nbsp;</Link> </h5>
     </Marquee>
         <MDBCard className={styles.mdbkard}>
