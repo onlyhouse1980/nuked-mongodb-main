@@ -1,43 +1,32 @@
-// components/Spreadsheet.js
 import { useState, useEffect } from 'react';
 import { TextField, Button } from '@mui/material';
 import axios from 'axios';
-import styles from '../styles/Spreadsheet.module.css';
-import Image from 'next/image';
 import IconButton from '@mui/material/IconButton';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import SaveIcon from '@mui/icons-material/Save';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import styles from '../styles/Spreadsheet.module.css';
 
 const Spreadsheet = () => {
   const [data, setData] = useState([]);
   const [headers, setHeaders] = useState([]);
   const [error, setError] = useState(null);
 
+  const [visibleColumns, setVisibleColumns] = useState(['last_name', 'meter_serialNum', 'lot_number', 'dec04_23', 'feb02_24', 'apr01_24', 'jun01_24', 'aug01_24', 'oct01_24', 'dec01_24']);
+
   useEffect(() => {
-    console.log('Spreadsheet component mounted');
     fetchData();
   }, []);
 
   const fetchData = async () => {
     try {
       const response = await axios.get('/api/spreadsheet/fetch');
-      console.log('API response:', response);
       const fetchedData = response.data;
+
       if (fetchedData.length > 0) {
         const allHeaders = Object.keys(fetchedData[0]);
-        const specificHeaders = ['last_name', 'meter_serialNum'];
-        const last10Headers = allHeaders.filter(header => !specificHeaders.includes(header)).slice(-40);
-        const finalHeaders = [...specificHeaders, ...last10Headers];
-        const finalData = fetchedData.map(row => {
-          const newRow = {};
-          finalHeaders.forEach(header => {
-            newRow[header] = row[header];
-          });
-          return newRow;
-        });
-        setHeaders(finalHeaders);
-        setData(finalData);
+        setHeaders(allHeaders);
+        setData(fetchedData);
       }
     } catch (err) {
       console.error('Error fetching data:', err);
@@ -53,14 +42,9 @@ const Spreadsheet = () => {
     const newHeader = prompt('Enter column name:');
     if (newHeader) {
       setHeaders(prevHeaders => {
-        const newHeaders = [...prevHeaders, newHeader].slice(-40);
-        setData(data.map(row => ({ ...row, [newHeader]: '' })).map(row => {
-          const newRow = {};
-          newHeaders.forEach(header => {
-            newRow[header] = row[header];
-          });
-          return newRow;
-        }));
+        const newHeaders = [...prevHeaders, newHeader];
+        setVisibleColumns([...visibleColumns, newHeader]); // Make new column visible by default
+        setData(data.map(row => ({ ...row, [newHeader]: '' })));
         return newHeaders;
       });
     }
@@ -70,12 +54,13 @@ const Spreadsheet = () => {
     setData(data.filter((_, index) => index !== rowIndex));
   };
 
+  const handleHideColumn = (column) => {
+    setVisibleColumns(visibleColumns.filter(header => header !== column));
+  };
+
   const handleRemoveColumn = (column) => {
-    setHeaders(headers.filter(header => header !== column));
-    setData(data.map(row => {
-      const { [column]: _, ...rest } = row;
-      return rest;
-    }));
+    // Remove column from visibility without deleting it from data
+    setVisibleColumns(visibleColumns.filter(header => header !== column));
   };
 
   const handleInputChange = (e, rowIndex, column) => {
@@ -96,55 +81,63 @@ const Spreadsheet = () => {
 
   return (
     <div>
-      <Button variant="contained" startIcon={<AddBoxIcon />} onClick={handleAddRow}>Add Row</Button>
-      <Button variant="contained" startIcon={<AddBoxIcon />} onClick={handleAddColumn}>Add Column</Button>
-      <Button variant="contained" startIcon={<SaveIcon />} onClick={handleSave}>Save</Button>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <div className={styles['table-container']}>
-        <table className={styles.table}>
-          <thead className={styles.thead} >
-            <tr className={styles.tr} >
-              {headers.map(header => (
-                <th className={styles.th}  key={header}>
-                   <div>
-                   <IconButton aria-label="delete" color="error">
-                   <DeleteForeverIcon onClick={() => handleRemoveColumn(header)} /></IconButton>
-                   </div>
-                  {header}
-                 
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((row, rowIndex) => (
-              <tr className={styles.tr}  key={rowIndex}>
-                {headers.map(header => (
-                  <td className={styles.td}  key={header}>
-                    <TextField
-                      value={row[header]}
-                      onChange={(e) => handleInputChange(e, rowIndex, header)}
-                      inputProps={{
-                        style: {
-                          color: 'white',
-                          backgroundColor: 'blue',
-                          border: 'none',
-                          width: '75px',
-                          align: 'center'
-                        },
-                      }}
-                    />
-                  </td>
+      <div>
+        <Button variant="contained" startIcon={<AddBoxIcon />} onClick={handleAddRow}>Add Row</Button>
+        <Button variant="contained" startIcon={<AddBoxIcon />} onClick={handleAddColumn}>Add Column</Button>
+        <Button variant="contained" startIcon={<SaveIcon />} onClick={handleSave}>Save</Button>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+      </div>
+
+      <div className="scroll-container">
+        <style jsx>{`
+          .scroll-container {
+            overflow-x: auto;
+            max-width: 100%;
+          }
+          table {
+            min-width: 1200px;
+            white-space: nowrap;
+          }
+        `}</style>
+
+        <div className={styles['table-container']}>
+          <table className={styles.table}>
+            <thead className={styles.thead}>
+              <tr className={styles.tr}>
+                {visibleColumns.map(header => (
+                  <th className={styles.th} key={header}>
+                    {header}
+                    <IconButton aria-label="hide" color="secondary" onClick={() => handleHideColumn(header)}>
+                      <DeleteForeverIcon />
+                    </IconButton>
+                  </th>
                 ))}
-                <td className={styles.td} >
-                <IconButton aria-label="delete" color="error">
-        <DeleteForeverIcon onClick={() => handleRemoveRow(rowIndex)}/>
-       </IconButton> 
-                </td>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {data.map((row, rowIndex) => (
+                <tr className={styles.tr} key={rowIndex}>
+                  {visibleColumns.map(header => (
+                    <td className={styles.td} key={header}>
+                      <TextField
+                        value={row[header] || ''}
+                        onChange={(e) => handleInputChange(e, rowIndex, header)}
+                        inputProps={{
+                          style: { color: 'white', backgroundColor: 'blue', border: 'none', width: '75px' },
+                        }}
+                      />
+                    </td>
+                  ))}
+                  <td className={styles.td}>
+                    <IconButton aria-label="delete" color="error" onClick={() => handleRemoveRow(rowIndex)}>
+                      <DeleteForeverIcon />
+                    </IconButton>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
