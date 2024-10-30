@@ -13,7 +13,9 @@ import Zoom from 'react-reveal/Zoom';
 import { motion } from 'framer-motion'
 import React from 'react'
 import { MDBAnimation } from "mdbreact";
-import useSWR from 'swr'
+import useSWR from 'swr';
+import Marquee from "react-fast-marquee"
+import Link from "next/link"
 
 export default function Register() {
   return(
@@ -26,9 +28,12 @@ export default function Register() {
   <Zoom>
     <MDBRow className='mt-5'>
       <MDBCol md='6' className='mx-auto'>
-      <MDBAnimation type="flash" infinite>
+      {/* <MDBAnimation type="flash" infinite>
       <a className={styles.a} href="/howtoreadmeter.pdf">How to read your meter?</a>
-        </MDBAnimation>
+        </MDBAnimation>*/}
+  <Marquee className='z=100 drop-shadow-md'>
+      <h5 className='text-white z=100 drop-shadow-md'><Link className='text-white underline' href="/howtoreadmeter.pdf">If you are having trouble getting your usage... READ: How to read your meter?&nbsp;</Link> </h5>
+    </Marquee>
         <MDBCard className={styles.mdbkard}>
           <MDBCardImage
             className='img-fluid'
