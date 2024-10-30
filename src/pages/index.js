@@ -4,6 +4,8 @@ import styles from '../styles/styles.module.css'
 import * as React from "react";
 import { motion, inView} from "framer-motion";
 import profileImage from "../../public/Images/WebPFiles/psound.webp"
+import Marquee from "react-fast-marquee"
+import Link from "next/link"
 
 const PhotoArray = []
 
@@ -23,7 +25,9 @@ export default function index(){
     <h2 className={styles.bgText}>
       <b>Community Group</b>
     </h2>
-
+ {/* <Marquee className='z=100 drop-shadow-md'>
+      <h5 className='text-white z=100 drop-shadow-md'>September 17th, 2024&nbsp;</h5> <Link className='text-white underline' href="/pdfs/newsletters/news_sep_24"><h5>OBCG Newsletter</h5></Link><h5 className='text-white'>&nbsp; available now!</h5>
+    </Marquee> */}
     </div>
   <div>
     <motion.div exit={{ opacity: 0 }} initial={{opacity: 0 }} animate={{opacity: 1 }}>
