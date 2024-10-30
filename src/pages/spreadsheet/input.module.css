@@ -1,0 +1,7 @@
+/* Add this to the component CSS */
+.horizscroll {
+    overflow-x: auto;
+    max-width: 100%; /* or set a specific width */
+    min-width: fit-content;
+  }
+  
