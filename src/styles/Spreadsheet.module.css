@@ -96,3 +96,10 @@
   background-image: url(http://localhost:3000px/Images/delete.png;);
   background-color: transparent;
 }
+
+/* Add this to the component CSS */
+.horizscroll {
+  overflow-x: auto;
+  max-width: 100%; /* or set a specific width */
+  min-width: fit-content;
+}
