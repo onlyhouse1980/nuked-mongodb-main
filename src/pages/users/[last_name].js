@@ -1931,6 +1931,53 @@ const User = () => {
     }
   }
 
+function December2024() {
+    let a = user.dec01_24 
+    let b = user.oct01_24
+    let c = a - b
+     
+    
+
+
+    if (c > 6000) {
+      return (
+        <input
+          style={{
+            backgroundColor: bgColors.Blue,
+            margin: "0 10px 0 10px",
+            width: "75px",
+          }}
+          type="text"
+          display="none"
+          name="greaterThan"
+          id="gTDecember2024"
+          /*chech this one for error*/
+          value={"$" + ((c - 6000) * 0.025).toFixed(2)}
+          label="results"
+          readOnly
+        ></input>
+      );
+      } else {
+        return (
+          <input
+            style={{
+              backgroundColor: bgColors.Blue,
+              margin: "0 10px 0 10px",
+              width: "75px",
+            }}
+            type="text"
+            display="none"
+            name="greaterThan"
+            id="gtDecember2024"
+            /*chech this one for error*/
+            value={0}
+            label="results"
+            readOnly
+          ></input>
+        );
+    }
+  }
+
 
   return (
     <main
@@ -1994,7 +2041,56 @@ const User = () => {
             </thead>
             <tbody>
 
-{/* August 2024 */}
+          {/* October 2024 */}
+<tr>
+                <td className={styles.td3}>
+                  <p className={styles.p}>Oct 2024</p>
+                  <p
+                    style={{
+                      fontSize: 9,
+                      width: "75px",
+                      color: "white",
+                      margin: "-20px 0 0 10px",
+                      padding: 0,
+                    }}
+                  >
+                    (10/1/24) - (12/1/24
+                  </p>
+                </td>
+                <td className={styles.td3}>
+                  <input
+                    style={{
+                      backgroundColor: bgColors.Blue,
+                      margin: "0 10px 0 10px",
+                      width: "75px",
+                    }}
+                    type="text"
+                    name="utilized"
+                    id="October2024"
+                    value={(user.dec01_24 - user.oct01_24 )}
+                    label="answers"
+                    readOnly
+                  ></input>
+                </td>
+                <td className={styles.td3}>
+                  <input
+                    style={{
+                      backgroundColor: bgColors.Blue,
+                      margin: "0 10px 0 10px",
+                      width: "75px",
+                    }}
+                    type="text"
+                    name="utilized"
+                    id="October2024"
+                    value={(6000 - (user.dec01_24 - user.oct01_24))*-1}
+                    label="answers"
+                    readOnly
+                  ></input>
+                </td>
+                <td className={styles.td3}>{December2024()}</td>
+              </tr>
+          
+          {/* August 2024 */}
 <tr>
                 <td className={styles.td3}>
                   <p className={styles.p}>Aug 2024</p>
