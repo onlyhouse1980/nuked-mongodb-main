@@ -256,6 +256,14 @@ class Navbar extends React.Component {
                         2.6.25
                       </Link>
                     </MDBDropdownItem>
+                    <MDBDropdownItem>
+                      <Link
+                        href="/25_318.pdf"
+                        onClick={this.toggleCollapse}
+                      >
+                        3.18.25
+                      </Link>
+                    </MDBDropdownItem>
                    
                   </MDBDropdownMenu>
                 </MDBDropdown>
