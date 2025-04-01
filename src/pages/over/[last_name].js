@@ -2027,6 +2027,53 @@ function February2025() {
     }
   }
 
+function April2025() {
+    let a = user.apr01_25 
+    let b = user.feb01_24
+    let c = a - b
+     
+    
+
+
+    if (c > 6000) {
+      return (
+        <input
+          style={{
+            backgroundColor: bgColors.Blue,
+            margin: "0 10px 0 10px",
+            width: "75px",
+          }}
+          type="text"
+          display="none"
+          name="greaterThan"
+          id="gTApril2025"
+          /*chech this one for error*/
+          value={"$" + ((c - 6000) * 0.025).toFixed(2)}
+          label="results"
+          readOnly
+        ></input>
+      );
+      } else {
+        return (
+          <input
+            style={{
+              backgroundColor: bgColors.Blue,
+              margin: "0 10px 0 10px",
+              width: "75px",
+            }}
+            type="text"
+            display="none"
+            name="greaterThan"
+            id="gtApril2025"
+            /*chech this one for error*/
+            value={0}
+            label="results"
+            readOnly
+          ></input>
+        );
+    }
+  }
+        
   return (
     <main
       style={{
@@ -2089,6 +2136,55 @@ function February2025() {
             </thead>
             <tbody>
 
+{/* February 2025 */}
+<tr>
+                <td className={styles.td3}>
+                  <p className={styles.p}>Feb 2025</p>
+                  <p
+                    style={{
+                      fontSize: 9,
+                      width: "75px",
+                      color: "white",
+                      margin: "-20px 0 0 10px",
+                      padding: 0,
+                    }}
+                  >
+                    (02/1/25 - 04/01/25)
+                  </p>
+                </td>
+                <td className={styles.td3}>
+                  <input
+                    style={{
+                      backgroundColor: bgColors.Blue,
+                      margin: "0 10px 0 10px",
+                      width: "75px",
+                    }}
+                    type="text"
+                    name="utilized"
+                    id="February2025"
+                    value={(user.apr01_25 - user.feb01_24 )}
+                    label="answers"
+                    readOnly
+                  ></input>
+                </td>
+                <td className={styles.td3}>
+                  <input
+                    style={{
+                      backgroundColor: bgColors.Blue,
+                      margin: "0 10px 0 10px",
+                      width: "75px",
+                    }}
+                    type="text"
+                    name="utilized"
+                    id="February2025"
+                    value={(6000 - (user.apr01_25 - user.feb01_25))*-1}
+                    label="answers"
+                    readOnly
+                  ></input>
+                </td>
+                <td className={styles.td3}>{April2025()}</td>
+              </tr>
+            
           {/* December 2024 */}
 <tr>
                 <td className={styles.td3}>
