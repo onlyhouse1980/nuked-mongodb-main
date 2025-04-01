@@ -129,7 +129,7 @@ const User = () => {
             <tr>
               <td className={styles.td3}>
                 <p className={styles.p}></p>
-                <p className={styles.p}>Last reading - February 01, 2025</p>
+                <p className={styles.p}>Last reading - April 01, 2025</p>
               </td>
               <td className={styles.td3}>
                 <input
@@ -138,8 +138,8 @@ const User = () => {
                   }}
                   type="text"
                   id="info2"
-                  label="February 01, 2025"
-                  value={user.feb01_25}
+                  label="April 01, 2025"
+                  value={user.apr01_25}
                   readOnly
                 />
               </td>
@@ -147,7 +147,7 @@ const User = () => {
             <tr>
               <td className={styles.td3}>
                 <p className={styles.p}>
-                  Gallons used since February 01, 2025.
+                  Gallons used since April 01, 2025.
                 </p>
               </td>
               <td className={styles.td3}>
