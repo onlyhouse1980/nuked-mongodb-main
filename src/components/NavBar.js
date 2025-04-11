@@ -171,7 +171,7 @@ class Navbar extends React.Component {
                         href="/CCR_April_2025.pdf"
                         onClick={this.toggleCollapse}
                       >
-                         CCR 2024
+                         CCR 2024  
                       </Link>
                     </MDBDropdownItem>
                     <MDBDropdownItem>
