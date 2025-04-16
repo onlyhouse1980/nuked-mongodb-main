@@ -174,7 +174,7 @@ class Navbar extends React.Component {
                          CCR 2024  
                       </Link>
                     </MDBDropdownItem>
-                    <MDBDropdownItem>
+                   
                     <MDBDropdownItem>
                       <Link
                         href="/pdfs/consumer2024"
