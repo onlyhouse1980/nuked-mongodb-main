@@ -8,7 +8,7 @@ const video = () => (
 <motion.div exit={{ opacity: 0 }} initial={{opacity: 0 }} animate={{opacity: 1 }}>
    
     <Zoom top>
-    <motion.div className={styles.content}
+    <motion.div className={styles.iframe}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.2 }}>
