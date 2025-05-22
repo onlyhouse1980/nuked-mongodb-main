@@ -12,8 +12,9 @@ const video = () => (
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.2 }}>
-      <video className='fixed z-\[-1\]' controls muted loop style={{ width: '100%', height: '100%' }}
-         src="https://drive.google.com/uc?id=1Op6BCXirdL5YD0YOXRKE890U7uzvESOf#t=0.001" />
+      <video 
+         src="https://drive.google.com/uc?id=1Op6BCXirdL5YD0YOXRKE890U7uzvESOf#t=0.001" controls>
+		 </video>
 		 
     </motion.div>
     </Zoom>
