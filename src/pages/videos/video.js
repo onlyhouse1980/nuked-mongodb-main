@@ -5,14 +5,14 @@ import Zoom from 'react-reveal/Zoom'
 
 
 const video = () => (
-<motion.div exit={{ opacity: 0 }} initial={{opacity: 0 }} animate={{opacity: 1 }}>
+<motion.div exit={{ opacity: 0 }} initial={{opacity: 0 }} animate={{opacity: 0 }}>
    
     <Zoom top>
     <motion.div className={styles.content}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.2 }}>
-      <iframe src="https://drive.google.com/file/d/1Op6BCXirdL5YD0YOXRKE890U7uzvESOf/preview" width="100%" height="100%" allow="autoplay"></iframe>
+      <iframe src="https://drive.google.com/file/d/1Op6BCXirdL5YD0YOXRKE890U7uzvESOf/preview" allowFullScreen width="640" height="480" allow="autoplay"></iframe>
 	
 		 
     </motion.div>
