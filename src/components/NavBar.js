@@ -407,7 +407,7 @@ class Navbar extends React.Component {
                   <MDBDropdownMenu>
                     <MDBDropdownItem>
                       <Link href="/videos/video" onClick={this.toggleCollapse}>
-                        PUD
+                        Mtg. with PUD 1 - May 16, 2025
                       </Link>
                     </MDBDropdownItem>
                     <MDBDropdownItem>
