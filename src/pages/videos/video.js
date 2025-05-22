@@ -13,7 +13,7 @@ const video = () => (
       animate={{ opacity: 1 }}
       transition={{ delay: 0.2 }}>
       <video 
-         src="https://drive.google.com/uc?id=1Op6BCXirdL5YD0YOXRKE890U7uzvESOf#t=0.001" controls>
+         src="https://drive.google.com/file/d/1Op6BCXirdL5YD0YOXRKE890U7uzvESOf/preview" controls>
 		 </video>
 		 
     </motion.div>
