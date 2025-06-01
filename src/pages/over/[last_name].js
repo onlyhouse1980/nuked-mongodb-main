@@ -2073,6 +2073,53 @@ function April2025() {
         );
     }
   }
+
+function June2025() {
+    let a = user.jun01_25 
+    let b = user.apr01_25
+    let c = a - b
+     
+    
+
+
+    if (c > 6000) {
+      return (
+        <input
+          style={{
+            backgroundColor: bgColors.Blue,
+            margin: "0 10px 0 10px",
+            width: "75px",
+          }}
+          type="text"
+          display="none"
+          name="greaterThan"
+          id="gTJunel2025"
+          /*chech this one for error*/
+          value={"$" + ((c - 6000) * 0.025).toFixed(2)}
+          label="results"
+          readOnly
+        ></input>
+      );
+      } else {
+        return (
+          <input
+            style={{
+              backgroundColor: bgColors.Blue,
+              margin: "0 10px 0 10px",
+              width: "75px",
+            }}
+            type="text"
+            display="none"
+            name="greaterThan"
+            id="gtJune2025"
+            /*chech this one for error*/
+            value={0}
+            label="results"
+            readOnly
+          ></input>
+        );
+    }
+}
         
   return (
     <main
