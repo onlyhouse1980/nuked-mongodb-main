@@ -2186,7 +2186,7 @@ function June2025() {
 {/* April 2025 */}
 <tr>
                 <td className={styles.td3}>
-                  <p className={styles.p}>Apt2025</p>
+                  <p className={styles.p}>Apr 2025</p>
                   <p
                     style={{
                       fontSize: 9,
@@ -2209,7 +2209,7 @@ function June2025() {
                     type="text"
                     name="utilized"
                     id="2025"
-                    value={(user.jun01_25 - user.Apr01_25 )}
+                    value={(user.jun01_25 - user.apr01_25 )}
                     label="answers"
                     readOnly
                   ></input>
