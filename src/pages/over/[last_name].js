@@ -2075,7 +2075,7 @@ function April2025() {
   }
 
 function June2025() {
-    let a = user.aug01_25 
+    let a = user.jun01_25 
     let b = user.apr01_25
     let c = a - b
      
