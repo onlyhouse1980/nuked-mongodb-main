@@ -2075,7 +2075,7 @@ function April2025() {
   }
 
 function June2025() {
-    let a = user.jun01_25 
+    let a = user.aug01_25 
     let b = user.apr01_25
     let c = a - b
      
@@ -2093,7 +2093,7 @@ function June2025() {
           type="text"
           display="none"
           name="greaterThan"
-          id="gTJunel2025"
+          id="gTJune2025"
           /*chech this one for error*/
           value={"$" + ((c - 6000) * 0.025).toFixed(2)}
           label="results"
@@ -2183,6 +2183,54 @@ function June2025() {
             </thead>
             <tbody>
 
+{/* April 2025 */}
+<tr>
+                <td className={styles.td3}>
+                  <p className={styles.p}>Apt2025</p>
+                  <p
+                    style={{
+                      fontSize: 9,
+                      width: "75px",
+                      color: "white",
+                      margin: "-20px 0 0 10px",
+                      padding: 0,
+                    }}
+                  >
+                    (04/1/25 - 06/01/25)
+                  </p>
+                </td>
+                <td className={styles.td3}>
+                  <input
+                    style={{
+                      backgroundColor: bgColors.Blue,
+                      margin: "0 10px 0 10px",
+                      width: "75px",
+                    }}
+                    type="text"
+                    name="utilized"
+                    id="2025"
+                    value={(user.jun01_25 - user.Apr01_25 )}
+                    label="answers"
+                    readOnly
+                  ></input>
+                </td>
+                <td className={styles.td3}>
+                  <input
+                    style={{
+                      backgroundColor: bgColors.Blue,
+                      margin: "0 10px 0 10px",
+                      width: "75px",
+                    }}
+                    type="text"
+                    name="utilized"
+                    id="April2025"
+                    value={(6000 - (user.jun01_25 - user.apr01_25))*-1}
+                    label="answers"
+                    readOnly
+                  ></input>
+                </td>
+                <td className={styles.td3}>{April2025()}</td>
+              
 {/* February 2025 */}
 <tr>
                 <td className={styles.td3}>
