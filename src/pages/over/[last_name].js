@@ -2230,7 +2230,7 @@ function June2025() {
                   ></input>
                 </td>
                 <td className={styles.td3}>{April2025()}</td>
-              
+                      </tr>
 {/* February 2025 */}
 <tr>
                 <td className={styles.td3}>
