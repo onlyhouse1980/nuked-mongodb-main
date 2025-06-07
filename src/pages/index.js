@@ -25,9 +25,9 @@ export default function index(){
     <h2 className={styles.bgText}>
       <b>Community Group</b>
     </h2>
- {/* <Marquee className='z=100 drop-shadow-md'>
-      <h5 className='text-white z=100 drop-shadow-md'>September 17th, 2024&nbsp;</h5> <Link className='text-white underline' href="/pdfs/newsletters/news_sep_24"><h5>OBCG Newsletter</h5></Link><h5 className='text-white'>&nbsp; available now!</h5>
-    </Marquee> */}
+  <Marquee className='z=100 drop-shadow-md'>
+      <h5 className='text-white z=100 drop-shadow-md'>Annual Meeting! Saturday, June 21, 2025 - 2 to 3 p.m.  Location: 340 E Orchard Beach Drive&nbsp;</h5>
+    </Marquee>
     </div>
   <div>
     <motion.div exit={{ opacity: 0 }} initial={{opacity: 0 }} animate={{opacity: 1 }}>
