@@ -24,10 +24,10 @@ export default function index(){
     </h2>
     <h2 className={styles.bgText}>
       <b>Community Group</b>
-    </h2>
+    </h2>{/*
   <Marquee className='z=100 drop-shadow-md'>
       <h5 className='text-white z=100 drop-shadow-md'>Annual Meeting! Saturday, June 21, 2025 - 2 to 3 p.m.  Location: 340 E Orchard Beach Drive&nbsp;</h5>
-    </Marquee>
+    </Marquee>*/}
     </div>
   <div>
     <motion.div exit={{ opacity: 0 }} initial={{opacity: 0 }} animate={{opacity: 1 }}>
