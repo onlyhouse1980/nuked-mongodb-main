@@ -74,7 +74,7 @@ const Executive = () => (
         </motion.div>
         <motion.div variants={item} className={styles.content}>
           <motion.img
-            src="https://res.cloudinary.com/dfnaxhqqq/image/upload/c_scale,h_778,w_778/v1686608652/obcg/IMG-20230612-WA0001_unoemy.webp"
+            src="/Images/WebPFiles/IMG-20250624-WA0008.webp"
             loading="lazy"
             width="300"
             alt="Member Photo Secretary/Treasurer"
