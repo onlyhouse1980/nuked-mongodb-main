@@ -66,7 +66,7 @@ const Executive = () => (
             <p>
               Vice President
               <br />
-              Erika Aust
+              Eric Campbell
               <br />
               
             </p>
