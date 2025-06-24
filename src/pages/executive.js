@@ -56,10 +56,10 @@ const Executive = () => (
         </motion.div>
         <motion.div variants={item} className={styles.content}>
           <motion.img
-            src="/Images/WebPFiles/team-2.webp"
+            src="/Images/WebPFiles/IMG-20250624-WA0009.webp"
             loading="lazy"
             width="300"
-            alt="Member Vice President Photo Erika Aus"
+            alt="Member Vice President Photo Eric Campbell"
             className={styles.Image5}
           />
           <div className={styles.contentNameplate}>
