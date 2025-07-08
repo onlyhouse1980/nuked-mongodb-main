@@ -136,7 +136,7 @@ class Navbar extends React.Component {
                     </MDBDropdownItem>
                     <MDBDropdownItem>
                       <Link
-                        href="/pdfs/franchisepermit"
+                        href="/franchisepermit.pdg"
                         onClick={this.toggleCollapse}
                       >
                         Mason County Franchise Permit
