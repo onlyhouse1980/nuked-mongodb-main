@@ -12,7 +12,7 @@ const Spreadsheet = () => {
   const [headers, setHeaders] = useState([]);
   const [error, setError] = useState(null);
 
-  const [visibleColumns, setVisibleColumns] = useState(['last_name', 'meter_serialNum', 'lot_number', 'dec04_23', 'feb02_24', 'apr01_24', 'jun01_24', 'aug01_24', 'oct01_24', 'dec01_24', 'feb01_25', 'apr01_25', 'jun01_25', 'last_name']);
+  const [visibleColumns, setVisibleColumns] = useState(['last_name', 'meter_serialNum', 'lot_number', 'feb01_25', 'apr01_25', 'jun01_25', 'last_name']);
 
   useEffect(() => {
     fetchData();
