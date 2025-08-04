@@ -4,7 +4,7 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { Button } from "../../components/ui/button";
-import { Link } from "next/link";
+import Link from "next/link";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -67,12 +67,13 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div style={{ marginTop: '10px' }}>
-          <Link href="/auth/forgot-password"
-            className="link">Forgot Password?
+        </form>
+
+        <div>
+          <Link href="/forgot-password" className="link">
+            Forgot Password?
           </Link>
         </div>
-        </form>
       </div>
     </main>
   );

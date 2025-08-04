@@ -1,59 +1,114 @@
-// pages/auth/forgot-password.js
+import { useState } from "react";
+import Head from "next/head";
+import { BiEnvelope } from "react-icons/bi"; // Using React Icons for a clean envelope icon
 
-import { useState } from 'react';
-
+// This component is a complete page for a Next.js application.
+// Save this file as `pages/forgot-password.js` or `app/forgot-password/page.js`.
 export default function ForgotPassword() {
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setMessage('');
-    setError('');
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setIsLoading(true);
+    setMessage("");
+    setIsError(false);
 
     try {
-      const res = await fetch('/api/auth/forgot-password', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      // Make the API call to our backend endpoint.
+      const response = await fetch("/api/forgot-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ email }),
       });
 
-      const data = await res.json();
+      const result = await response.json();
 
-      if (!res.ok) {
-        throw new Error(data.error || 'Something went wrong.');
+      if (response.ok) {
+        setMessage(result.message);
+        setIsError(false);
+      } else {
+        setMessage(result.message || "An unexpected error occurred.");
+        setIsError(true);
       }
-
-      setMessage('If an account with that email exists, we have sent a password reset email.');
-      setEmail('');
-    } catch (err) {
-      setError(err.message);
+    } catch (error) {
+      console.error("Front-end fetch error:", error);
+      setMessage("Network error. Please try again later.");
+      setIsError(true);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="container">
-      <h1>Forgot Password</h1>
-      {message && <p className="message success">{message}</p>}
-      {error && <p className="message error">{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="email">Email address</label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+    <>
+      <Head>
+        <title>Forgot Password</title>
+      </Head>
+
+      <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4 sm:p-6 lg:p-8">
+        <div className="bg-white p-6 sm:p-8 rounded-xl shadow-2xl w-full max-w-sm transform transition duration-500 hover:scale-105">
+          <div className="flex flex-col items-center mb-6">
+            <BiEnvelope className="text-indigo-600 text-5xl sm:text-6xl mb-2" />
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900">
+              Forgot Password
+            </h1>
+          </div>
+
+          <p className="text-sm text-gray-600 text-center mb-6">
+            Enter your email to receive a password reset link.
+          </p>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Email Address
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
+                required
+                className="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ease-in-out"
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={isLoading}
+              className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white transition-colors duration-150 ease-in-out ${
+                isLoading
+                  ? "bg-indigo-400 cursor-not-allowed"
+                  : "bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              }`}
+            >
+              {isLoading ? "Sending..." : "Send Reset Link"}
+            </button>
+          </form>
+
+          {message && (
+            <div
+              className={`mt-6 p-4 rounded-md text-sm text-center ${
+                isError
+                  ? "bg-red-100 text-red-700"
+                  : "bg-green-100 text-green-700"
+              }`}
+            >
+              {message}
+            </div>
+          )}
         </div>
-        <button type="submit" className="button">
-          Send Reset Link
-        </button>
-      </form>
-    </div>
+      </div>
+    </>
   );
 }
