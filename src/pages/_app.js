@@ -1,27 +1,28 @@
-import React, { Component, memo } from 'react';
-import 'bootstrap-css-only/css/bootstrap.min.css';
-import 'mdbreact/dist/css/mdb.css';
-import Layout from '../components/Layout';
+import React, { Component, memo } from "react";
+import "bootstrap-css-only/css/bootstrap.min.css";
+import "mdbreact/dist/css/mdb.css";
+import Layout from "../components/Layout";
 import { AnimatePresence } from "framer-motion";
-import '../styles/globals.css'
+import "../styles/globals.css";
 import "../css/customcss.css";
 import "@fortawesome/fontawesome-svg-core/styles.css"; // import Font Awesome CSS
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "../components/Marquee.scss";
-config.autoAddCss = false; 
+import { SessionProvider } from "next-auth/react";
 
-import PropTypes from 'prop-types';
+config.autoAddCss = false;
 
-function App({
-  Component,
-  pageProps: { session, ...pageProps },
-}) {
+import PropTypes from "prop-types";
+
+function App({ Component, pageProps: { session, ...pageProps } }) {
   return (
-    <Layout>
-      <AnimatePresence mode="wait">
-        <Component {...pageProps} />
-      </AnimatePresence>
-    </Layout>
+    <SessionProvider session={pageProps.session}>
+      <Layout>
+        <AnimatePresence mode="wait">
+          <Component {...pageProps} />
+        </AnimatePresence>
+      </Layout>
+    </SessionProvider>
   );
 }
 
