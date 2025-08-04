@@ -25,6 +25,7 @@
     "animo-core": "^1.0.8",
     "ansi-regex": "^6.0.1",
     "axios": "^1.7.2",
+    "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.2",
     "bootstrap-css-only": "^4.4.1",
     "class-variance-authority": "^0.7.1",

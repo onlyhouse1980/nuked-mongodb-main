@@ -1,58 +1,83 @@
-import { verify } from "jsonwebtoken";
-import bcrypt from "bcryptjs";
+// pages/api/reset-password.js
 
-// You will need to install these packages:
-// npm install jsonwebtoken bcryptjs
-const JWT_SECRET = process.env.NEXTAUTH_SECRET || "your_fallback_secret_key";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import dbConnect from "../../../lib/dbConnect";
+import WaterReading from "../../../models/WaterReading";
+
+const JWT_SECRET = process.env.JWT_SECRET;
 
 export default async function handler(req, res) {
+  console.log("*** RESET PASSWORD API LOGS ***");
+  console.log("API call received.");
+
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Method Not Allowed" });
   }
 
-  const { token, newPassword } = req.body;
+  const { token, password } = req.body;
+  console.log(`Token received: ${token}`);
 
-  if (!token || !newPassword) {
+  if (!token || !password) {
     return res
       .status(400)
-      .json({ message: "Token and new password are required" });
+      .json({ message: "Token and new password are required." });
   }
 
   try {
-    const decoded = verify(token, JWT_SECRET);
-    const { email } = decoded;
+    const decodedToken = jwt.verify(token, JWT_SECRET);
+    if (!decodedToken || !decodedToken.userId) {
+      return res.status(400).json({ message: "Invalid or malformed token." });
+    }
+    console.log(`Token successfully decoded. User ID: ${decodedToken.userId}`);
 
-    // --- Step 1: Find the user and verify the token in your database ---
-    // As in the previous API, you need to find the user by the email from the token.
-    // You must also verify the token's validity against the one stored in the database.
-    // This is a placeholder.
-    const userExists = true;
-    const storedTokenIsValid = true;
+    await dbConnect();
 
-    if (!userExists || !storedTokenIsValid) {
-      return res.status(400).json({ message: "Invalid or expired token." });
+    // Find the user by ID and check if the token and expiration are still valid.
+    const user = await WaterReading.findOne({
+      _id: decodedToken.userId,
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() },
+    });
+
+    // --- THIS IS THE CRITICAL DEBUGGING POINT ---
+    // This log will tell you what the query found.
+    console.log("Result of database query for user:", user);
+
+    if (!user) {
+      console.log(
+        "Password reset query failed. User not found or token expired/invalid."
+      );
+      return res
+        .status(404)
+        .json({ message: "Password reset token is invalid or has expired." });
     }
 
-    // --- Step 2: Hash the new password and update the user's record ---
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    console.log(
+      `User found in DB. Expiration time: ${user.resetPasswordExpires}`
+    );
 
-    // Replace this with your database update logic.
-    // For example:
-    // await userDoc.ref.update({
-    //    password: hashedPassword,
-    //    passwordResetToken: null, // Invalidate the token after use
-    //    passwordResetExpires: null,
-    // });
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    res.status(200).json({ message: "Password reset successfully." });
+    user.password = hashedPassword;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+    await user.save();
+
+    console.log("Password successfully reset.");
+    res.status(200).json({ message: "Password has been successfully reset." });
   } catch (error) {
-    console.error("Password reset error:", error);
-    if (
-      error.name === "TokenExpiredError" ||
-      error.name === "JsonWebTokenError"
-    ) {
-      return res.status(400).json({ message: "Invalid or expired token." });
+    console.error("Error in reset-password API:", error);
+    if (error.name === "TokenExpiredError") {
+      return res
+        .status(400)
+        .json({ message: "Password reset token has expired." });
+    } else if (error.name === "JsonWebTokenError") {
+      return res.status(400).json({ message: "Invalid token." });
     }
-    res.status(500).json({ message: "Internal server error." });
+    res.status(500).json({ message: "Server error. Please try again later." });
+  } finally {
+    console.log("*** END RESET PASSWORD API LOGS ***");
   }
 }

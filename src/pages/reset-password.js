@@ -1,71 +1,35 @@
-import React, { useState, useEffect } from "react";
+// pages/reset-password.js
+
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import { BiLockOpen } from "react-icons/bi";
 
-const ResetPasswordPage = () => {
+export default function ResetPassword() {
   const router = useRouter();
   const { token } = router.query;
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [message, setMessage] = useState({ text: "", type: "" });
+  const [message, setMessage] = useState("");
+  const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isTokenValid, setIsTokenValid] = useState(false);
-  const [isCheckingToken, setIsCheckingToken] = useState(true);
 
   useEffect(() => {
-    // As soon as the page loads, validate the token
-    const validateToken = async () => {
-      if (!token) {
-        setMessage({ text: "No token provided.", type: "error" });
-        setIsCheckingToken(false);
-        return;
-      }
-
-      try {
-        // Call an API endpoint to verify the token
-        const response = await fetch("/api/verify-token", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ token }),
-        });
-
-        if (response.ok) {
-          setIsTokenValid(true);
-          setMessage({
-            text: "Token verified. Please enter your new password.",
-            type: "info",
-          });
-        } else {
-          const result = await response.json();
-          setMessage({
-            text: result.message || "Invalid or expired token.",
-            type: "error",
-          });
-        }
-      } catch (error) {
-        setMessage({
-          text: "Network error. Could not verify token.",
-          type: "error",
-        });
-      } finally {
-        setIsCheckingToken(false);
-      }
-    };
-
-    if (token) {
-      validateToken();
-    } else {
-      setIsCheckingToken(false);
-    }
+    // Clear message when the component mounts or token changes.
+    setMessage("");
+    setIsError(false);
   }, [token]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     setIsLoading(true);
+    setMessage("");
+    setIsError(false);
 
     if (password !== confirmPassword) {
-      setMessage({ text: "Passwords do not match.", type: "error" });
+      setMessage("Passwords do not match.");
+      setIsError(true);
       setIsLoading(false);
       return;
     }
@@ -73,63 +37,43 @@ const ResetPasswordPage = () => {
     try {
       const response = await fetch("/api/reset-password", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, newPassword: password }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ token, password }),
       });
+
       const result = await response.json();
 
       if (response.ok) {
-        setMessage({
-          text: "Password has been reset successfully. Redirecting to login...",
-          type: "success",
-        });
-        // Redirect to login page after a short delay
+        setMessage(result.message);
+        setIsError(false);
+        // Optional: Redirect to login page after a delay
         setTimeout(() => router.push("/login"), 3000);
       } else {
-        setMessage({
-          text: result.message || "Failed to reset password. Please try again.",
-          type: "error",
-        });
+        setMessage(result.message || "An unexpected error occurred.");
+        setIsError(true);
       }
     } catch (error) {
-      console.error("Reset password error:", error);
-      setMessage({ text: "Network error. Please try again.", type: "error" });
+      console.error("Front-end fetch error:", error);
+      setMessage("Network error. Please try again later.");
+      setIsError(true);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const getMessageBoxClasses = () => {
-    if (!message.text) return "hidden";
-    switch (message.type) {
-      case "success":
-        return "bg-green-100 text-green-700";
-      case "error":
-        return "bg-red-100 text-red-700";
-      default:
-        return "bg-blue-100 text-blue-700";
-    }
-  };
-
-  if (isCheckingToken) {
+  if (!token) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p className="text-gray-600">Verifying token...</p>
-      </div>
-    );
-  }
-
-  if (!isTokenValid) {
-    return (
-      <div className="flex items-center justify-center min-h-screen p-4">
-        <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-xl text-center">
-          <p className="text-red-700">{message.text}</p>
-          <a
-            href="/forgot-password"
-            className="mt-4 inline-block font-medium text-blue-600 hover:text-blue-500"
+      <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
+        <div className="text-center p-6 sm:p-8 rounded-xl shadow-2xl w-full max-w-sm bg-white">
+          <p className="text-red-700">Invalid or missing reset token.</p>
+          <button
+            onClick={() => router.push("/forgot-password")}
+            className="mt-4 text-sm font-medium text-indigo-600 hover:text-indigo-500"
           >
-            Request a new reset link
-          </a>
+            Request a new password reset link.
+          </button>
         </div>
       </div>
     );
@@ -138,18 +82,19 @@ const ResetPasswordPage = () => {
   return (
     <>
       <Head>
-        <title>Reset Password - Meter Read Dash</title>
+        <title>Reset Password</title>
       </Head>
-      <div className="flex items-center justify-center min-h-screen p-4 bg-gray-100">
-        <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-xl">
-          <h1 className="text-3xl font-bold text-center text-gray-800 mb-6 font-['Inter']">
-            Set a New Password
-          </h1>
-          <p className="text-center text-gray-600 mb-8">
-            Enter and confirm your new password.
-          </p>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4 sm:p-6 lg:p-8">
+        <div className="bg-white p-6 sm:p-8 rounded-xl shadow-2xl w-full max-w-sm transform transition duration-500 hover:scale-105">
+          <div className="flex flex-col items-center mb-6">
+            <BiLockOpen className="text-indigo-600 text-5xl sm:text-6xl mb-2" />
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900">
+              Reset Password
+            </h1>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label
                 htmlFor="password"
@@ -160,11 +105,10 @@ const ResetPasswordPage = () => {
               <input
                 type="password"
                 id="password"
-                name="password"
-                required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                required
+                className="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ease-in-out"
               />
             </div>
             <div>
@@ -177,31 +121,39 @@ const ResetPasswordPage = () => {
               <input
                 type="password"
                 id="confirmPassword"
-                name="confirmPassword"
-                required
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                required
+                className="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ease-in-out"
               />
             </div>
+
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors disabled:bg-blue-400"
+              className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white transition-colors duration-150 ease-in-out ${
+                isLoading
+                  ? "bg-indigo-400 cursor-not-allowed"
+                  : "bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              }`}
             >
-              {isLoading ? "Saving..." : "Reset Password"}
+              {isLoading ? "Resetting..." : "Reset Password"}
             </button>
           </form>
 
-          <div
-            className={`mt-6 p-4 rounded-md text-sm font-medium ${getMessageBoxClasses()}`}
-          >
-            {message.text}
-          </div>
+          {message && (
+            <div
+              className={`mt-6 p-4 rounded-md text-sm text-center ${
+                isError
+                  ? "bg-red-100 text-red-700"
+                  : "bg-green-100 text-green-700"
+              }`}
+            >
+              {message}
+            </div>
+          )}
         </div>
       </div>
     </>
   );
-};
-
-export default ResetPasswordPage;
+}

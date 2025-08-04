@@ -1,9 +1,9 @@
+// pages/forgot-password.js
+
 import { useState } from "react";
 import Head from "next/head";
-import { BiEnvelope } from "react-icons/bi"; // Using React Icons for a clean envelope icon
+import { BiEnvelope } from "react-icons/bi";
 
-// This component is a complete page for a Next.js application.
-// Save this file as `pages/forgot-password.js` or `app/forgot-password/page.js`.
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -17,7 +17,6 @@ export default function ForgotPassword() {
     setIsError(false);
 
     try {
-      // Make the API call to our backend endpoint.
       const response = await fetch("/api/forgot-password", {
         method: "POST",
         headers: {

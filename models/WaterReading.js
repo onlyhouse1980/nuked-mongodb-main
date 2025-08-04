@@ -1,7 +1,8 @@
 // models/WaterReading.js
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const waterReadingSchema = new mongoose.Schema({
+const waterReadingSchema = new mongoose.Schema(
+  {
     // Add fields that match the structure of your 'readings' collection
     last_name: {
       type: String,
@@ -14,13 +15,19 @@ const waterReadingSchema = new mongoose.Schema({
     password: {
       type: String,
       required: true,
-    }
-}, {
-  // Pass the exact name of your collecti
-  collection: 'readings'
-});
+    },
+    resetPasswordToken: String,
+    resetPasswordExpires: Date,
+  },
+  {
+    // Pass the exact name of your collecti
+    collection: "readings",
+  }
+);
 
 // The third argument, 'readings', tells Mongoose to use this specific collection name.
-const WaterReading = mongoose.models.WaterReading || mongoose.model('WaterReading', waterReadingSchema, 'readings');
+const WaterReading =
+  mongoose.models.WaterReading ||
+  mongoose.model("WaterReading", waterReadingSchema, "readings");
 
 export default WaterReading;
