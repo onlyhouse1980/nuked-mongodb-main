@@ -12,6 +12,48 @@ Link {
   text-decoration: none;
 }
 
+.button-container {
+  /* Use Flexbox for centering */
+  display: flex;
+  justify-content: center; /* Horizontally center the items */
+  align-items: center; /* Vertically center the items (if the container has height) */
+
+  /* Optional: Give the container a height to show vertical centering */
+  height: 100vh;
+  width: 100%;
+  margin-bottom: 5rem;
+  margin-top: 0;
+}
+
+/*
+.header-logo {
+  position: absolute;
+  right: 0px;
+  left: 0px;
+}
+*/
+.header-main {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+.usage-text {
+  font-weight: bolder;
+}
+
+.due-text {
+  margin-left: 5px;
+}
+
+.dash-card {
+  margin-left: 10%;
+}
+
+
 .md-form label {
   margin-left: 3.5rem!important;
   margin-bottom: 3.5rem!important;
