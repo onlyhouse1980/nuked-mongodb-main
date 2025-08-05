@@ -97,7 +97,7 @@ export default function Dashboard() {
   return (
     <main className="min-h-screen bg-gray-100 p-8 flex flex-col items-center">
       <br />
-      <Card className="dash-card w-full max-w-2xl shadow-xl">
+      <Card className="card dash-card w-full max-w-2xl shadow-xl">
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
             <CardTitle className="user-name text-5xl font-bold">

@@ -70,7 +70,7 @@ export default function Signup() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <Card className="signup-card w-full max-w-sm">
+      <Card className="card signup-card w-full max-w-sm">
         <CardHeader>
           <CardTitle className="text-2xl space-x-6">Sign Up</CardTitle>
           <CardDescription>

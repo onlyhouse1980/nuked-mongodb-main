@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { signIn } from "next-auth/react"; // CRITICAL FIX: Import the signIn function
 import Head from "next/head";
 import Link from "next/link";
+import Styles from "../styles/login.module.css";
 
 // You will need to make sure you have these components or similar ones
 // from your project, or you can use standard HTML.
@@ -60,7 +61,7 @@ export default function Login() {
 
       <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
         {/* Use your Card component for styling */}
-        <Card className="w-full max-w-sm">
+        <Card className="card">
           <CardHeader className="text-center">
             <CardTitle className="text-3xl font-bold">Log In</CardTitle>
             <CardDescription>
@@ -72,6 +73,7 @@ export default function Login() {
               <div className="space-y-2">
                 <label htmlFor="email">Email</label>
                 <Input
+                  className="inputs"
                   id="email"
                   type="email"
                   value={email}
@@ -83,10 +85,12 @@ export default function Login() {
               <div className="space-y-2">
                 <label htmlFor="password">Password</label>
                 <Input
+                  className="inputs"
                   id="password"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Password"
                   required
                 />
               </div>
@@ -95,15 +99,12 @@ export default function Login() {
                 <p className="text-red-500 text-sm text-center">{error}</p>
               )}
 
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <Button type="submit" className="my-button" disabled={isLoading}>
                 {isLoading ? "Logging In..." : "Log In"}
               </Button>
             </form>
             <p className="mt-4 text-center text-sm">
-              <Link
-                href="/forgot-password"
-                className="text-indigo-600 hover:text-indigo-500"
-              >
+              <Link href="/forgot-password" className="forgotten">
                 Forgot your password?
               </Link>
             </p>
