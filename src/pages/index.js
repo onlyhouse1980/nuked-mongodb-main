@@ -29,13 +29,13 @@ export default function index() {
         <h2 className={styles.bgText}>
           <b>Community Group</b>
         </h2>
-        <Marquee className="z=100 drop-shadow-md">
+       {/* <Marquee className="z=100 drop-shadow-md">
           <h5 className="text-white z=100 drop-shadow-md">
             NEW! <Link href="/login">Login</Link> or{" "}
             <Link href="/signup">Signup</Link> now available. Get all your usage
             and billing information online! &nbsp;
           </h5>
-        </Marquee>
+        </Marquee> */}
       </div>
       <div>
         <motion.div
