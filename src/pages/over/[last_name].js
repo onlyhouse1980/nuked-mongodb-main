@@ -2211,7 +2211,6 @@ function October2025() {
         );
     }
 }
-        
   return (
     <main
       style={{
