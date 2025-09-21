@@ -27,6 +27,11 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
+    if (status === "authenticated") {
+    router.push("/dashboard");
+    return null;
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError(""); // Clear any previous errors
