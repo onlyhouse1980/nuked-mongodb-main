@@ -1,6 +1,7 @@
 // pages/login.js
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react"; // CRITICAL FIX: Import the signIn function
 import Head from "next/head";
