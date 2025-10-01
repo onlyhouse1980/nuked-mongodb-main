@@ -237,27 +237,31 @@ export default function BillingDashboard() {
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-500">
-            <div className="flex items-center justify-between">
-              <div>
+            <div className="flex pl-2 items-center justify-between">
+               
+              <div className='flex flex-row'>
                 <p className="text-sm text-gray-600 mb-1">Latest Bill</p>
                 <p className="text-3xl font-bold text-gray-800">
                   ${latestBill ? latestBill.amount.toFixed(2) : '0.00'}
                 </p>
+                <p className="text-xs text-gray-500"></p>
               </div>
-              <div className="bg-blue-100 p-3 rounded-full">
-                <DollarSign className="w-8 h-8 text-blue-600" />
+              <div className="bg-green-100 p-3 rounded-full">   
+                    <DollarSign className="w-8 h-8 text-blue-600" />
               </div>
+              
+             
             </div>
           </div>
 
           <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-green-500">
-            <div className="flex items-center justify-between">
+            <div className="flex pl-2 items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600 mb-1">Latest Usage</p>
                 <p className="text-3xl font-bold text-gray-800">
-                  {latestBill ? latestBill.usage.toLocaleString() : '0'}
+                  {latestBill ? latestBill.usage.toLocaleString() : '0'} gallons
                 </p>
-                <p className="text-xs text-gray-500">gallons</p>
+                <p className="text-xs text-gray-500"></p>
               </div>
               <div className="bg-green-100 p-3 rounded-full">
                 <Droplets className="w-8 h-8 text-green-600" />
@@ -266,13 +270,13 @@ export default function BillingDashboard() {
           </div>
 
           <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-purple-500">
-            <div className="flex items-center justify-between">
+            <div className="flex pl-2 items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600 mb-1">Total Usage - last 2 years</p>
                 <p className="text-3xl font-bold text-gray-800">
-                  {totalUsage.toLocaleString()}
+                  {totalUsage.toLocaleString()} gallons
                 </p>
-                <p className="text-xs text-gray-500">gallons</p>
+                <p className="text-xs text-gray-500"></p>
               </div>
               <div className="bg-purple-100 p-3 rounded-full">
                 <TrendingUp className="w-8 h-8 text-purple-600" />
@@ -281,13 +285,13 @@ export default function BillingDashboard() {
           </div>
 
           <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-orange-500">
-            <div className="flex items-center justify-between">
+            <div className="flex pl-2 items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600 mb-1">Total Billed</p>
                 <p className="text-3xl font-bold text-gray-800">
-                  ${totalBilled.toFixed(2)}
+                  ${totalBilled.toFixed(2)} all periods (two years)
                 </p>
-                <p className="text-xs text-gray-500">all periods</p>
+                <p className="text-xs text-gray-500"></p>
               </div>
               <div className="bg-orange-100 p-3 rounded-full">
                 <DollarSign className="w-8 h-8 text-orange-600" />
