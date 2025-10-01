@@ -14,7 +14,7 @@ const calculateBill = (currentReading, previousReading) => {
   const usage = currentReading - previousReading;
   if (usage <= 6000) return 0;
   const overageGallons = usage - 6000;
-  return overageGallons * 0.00025; // 0.025¢/gal
+  return overageGallons * 0.025; // 0.025¢/gal
 };
 
 const parseDate = (fieldName) => {
