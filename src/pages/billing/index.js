@@ -296,28 +296,7 @@ export default function BillingDashboard() {
           </div>
         </div>
 
-        {/* Chart */}
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">
-            Meter Reading History
-          </h2>
-         <ResponsiveContainer width="100%" height={300}>
-  <LineChart data={chartData}>
-    <CartesianGrid strokeDasharray="3 3" />
-    <XAxis dataKey="date" />
-    <YAxis />
-    <Tooltip />
-    <Line 
-      type="monotone" 
-      dataKey="usage" 
-      stroke="#3b82f6" 
-      strokeWidth={2}
-      dot={{ fill: '#3b82f6', r: 5 }}
-    />
-  </LineChart>
-</ResponsiveContainer>
-
-        </div>
+        
 
         {/* Billing Details Table */}
         <div className="bg-white rounded-xl shadow-lg overflow-hidden">
@@ -379,6 +358,29 @@ export default function BillingDashboard() {
               </tbody>
             </table>
           </div>
+        </div>
+
+        {/* Chart */}
+        <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+          <h2 className="text-xl font-semibold text-gray-800 mb-4">
+            Meter Reading History
+          </h2>
+         <ResponsiveContainer width="100%" height={300}>
+  <LineChart data={chartData}>
+    <CartesianGrid strokeDasharray="3 3" />
+    <XAxis dataKey="date" />
+    <YAxis />
+    <Tooltip />
+    <Line 
+      type="monotone" 
+      dataKey="usage" 
+      stroke="#3b82f6" 
+      strokeWidth={2}
+      dot={{ fill: '#3b82f6', r: 5 }}
+    />
+  </LineChart>
+</ResponsiveContainer>
+
         </div>
 
         {/* Pricing Info */}
