@@ -268,7 +268,7 @@ export default function BillingDashboard() {
           <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-purple-500">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600 mb-1">Total Usage</p>
+                <p className="text-sm text-gray-600 mb-1">Total Usage - last 2 years</p>
                 <p className="text-3xl font-bold text-gray-800">
                   {totalUsage.toLocaleString()}
                 </p>
@@ -382,7 +382,7 @@ export default function BillingDashboard() {
         <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
           <p className="text-sm text-gray-700">
             <strong>Pricing:</strong> First 6,000 gallons per billing period are included. 
-            Usage over 6,000 gallons is billed at $0.00025 per gallon (0.025¢/gal).
+            Usage over 6,000 gallons is billed at $0.025 per gallon (0.025¢/gal).
           </p>
         </div>
       </div>
