@@ -27,7 +27,7 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-    if (status === "authenticated") {
+    if (result.status === "authenticated") {
     router.push("/dashboard");
     return null;
   }
