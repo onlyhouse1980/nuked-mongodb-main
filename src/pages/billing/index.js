@@ -119,7 +119,7 @@ export default function BillingDashboard() {
           <div className="text-gray-600">{error}</div>
           <button 
             onClick={() => setError(null)}
-            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+            className="bg-blue-700 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           >
             Try Again
           </button>
@@ -147,7 +147,7 @@ export default function BillingDashboard() {
             />
             <button
               type="submit"
-              className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium"
+              className="bg-blue-700 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >
               View Billing
             </button>
@@ -228,7 +228,7 @@ export default function BillingDashboard() {
               setLastName('');
               setSearchLastName('');
             }}
-            className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700"
+            className="bg-blue-700 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           >
             New Search
           </button>
@@ -244,7 +244,7 @@ export default function BillingDashboard() {
                 <p className="text-3xl font-bold text-gray-800">
                   ${latestBill ? latestBill.amount.toFixed(2) : '0.00'}
                 </p>
-                <p className="text-xs text-gray-500"></p>
+                
               </div>
               <div className="bg-green-100 p-3 rounded-full">   
                     <DollarSign className="w-8 h-8 text-blue-600" />
@@ -261,7 +261,7 @@ export default function BillingDashboard() {
                 <p className="text-3xl font-bold text-gray-800">
                   {latestBill ? latestBill.usage.toLocaleString() : '0'} gallons
                 </p>
-                <p className="text-xs text-gray-500"></p>
+                
               </div>
               <div className="bg-green-100 p-3 rounded-full">
                 <Droplets className="w-8 h-8 text-green-600" />
@@ -276,7 +276,7 @@ export default function BillingDashboard() {
                 <p className="text-3xl font-bold text-gray-800">
                   {totalUsage.toLocaleString()} gallons
                 </p>
-                <p className="text-xs text-gray-500"></p>
+               
               </div>
               <div className="bg-purple-100 p-3 rounded-full">
                 <TrendingUp className="w-8 h-8 text-purple-600" />
@@ -291,7 +291,7 @@ export default function BillingDashboard() {
                 <p className="text-3xl font-bold text-gray-800">
                   ${totalBilled.toFixed(2)} all periods (two years)
                 </p>
-                <p className="text-xs text-gray-500"></p>
+               
               </div>
               <div className="bg-orange-100 p-3 rounded-full">
                 <DollarSign className="w-8 h-8 text-orange-600" />
@@ -366,7 +366,7 @@ export default function BillingDashboard() {
 
         {/* Chart */}
         <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">
+          <h2 className="text-xl pl-4 pt-2 font-semibold text-gray-800 mb-4">
             Meter Reading History
           </h2>
          <ResponsiveContainer width="100%" height={300}>
