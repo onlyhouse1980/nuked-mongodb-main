@@ -376,7 +376,7 @@ export default function BillingDashboard() {
             </div>
 
     {/* Billing Details Table */}
-        <div className="bg-white pl-2 rounded-xl shadow-lg overflow-hidden">
+        <div className="bg-white pl-2 pr-2 rounded-xl shadow-lg overflow-hidden">
             <div className="p-6 bg-gradient-to-r from-blue-600 to-indigo-600">
                 <h2 className="text-xl font-semibold text-white flex items-center">
                 <Calendar className="w-5 h-5 mr-2" />
