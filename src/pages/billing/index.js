@@ -75,11 +75,11 @@ export default function BillingDashboard() {
       
       const filteredData = { 
         last_name: data.last_name,
-        meterSerial_num: data.meterSerial_num 
+        meter_serialNum: data.meter_serialNum 
       };
       
       Object.keys(data).forEach(key => {
-        if (key !== 'last_name' && key !== 'meterSerial_num') {
+        if (key !== 'last_name' && key !== 'meter_serialNum') {
           const dateInfo = parseDate(key);
           if (dateInfo.sortDate >= twoYearsAgo) {
             filteredData[key] = data[key];
@@ -157,10 +157,10 @@ export default function BillingDashboard() {
     );
   }
 
-  // Extract readings from customer data (exclude last_name and meterSerial_num)
+  // Extract readings from customer data (exclude last_name and meter_serialNum)
   const readings = [];
   Object.keys(customerData).forEach(key => {
-    if (key !== 'last_name' && key !== 'meterSerial_num') {
+    if (key !== 'last_name' && key !== 'meter_serialNum') {
       const dateInfo = parseDate(key);
       readings.push({
         field: key,
@@ -200,10 +200,11 @@ export default function BillingDashboard() {
     : 0;
 
   // Chart data
-  const chartData = readings.map(r => ({
-    date: r.date,
-    reading: r.reading
-  }));
+ const chartData = billingPeriods.map(period => ({
+  date: period.period.split(' - ')[1], // use the END of the billing period
+  usage: period.usage
+}));
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
@@ -218,7 +219,7 @@ export default function BillingDashboard() {
               Account: {customerData.last_name}
             </p>
             <p className="text-sm text-gray-500">
-              Meter: {customerData.meterSerial_num}
+              Meter: {customerData.meter_serialNum}
             </p>
           </div>
           <button
@@ -300,21 +301,22 @@ export default function BillingDashboard() {
           <h2 className="text-xl font-semibold text-gray-800 mb-4">
             Meter Reading History
           </h2>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={chartData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" />
-              <YAxis />
-              <Tooltip />
-              <Line 
-                type="monotone" 
-                dataKey="reading" 
-                stroke="#3b82f6" 
-                strokeWidth={2}
-                dot={{ fill: '#3b82f6', r: 5 }}
-              />
-            </LineChart>
-          </ResponsiveContainer>
+         <ResponsiveContainer width="100%" height={300}>
+  <LineChart data={chartData}>
+    <CartesianGrid strokeDasharray="3 3" />
+    <XAxis dataKey="date" />
+    <YAxis />
+    <Tooltip />
+    <Line 
+      type="monotone" 
+      dataKey="usage" 
+      stroke="#3b82f6" 
+      strokeWidth={2}
+      dot={{ fill: '#3b82f6', r: 5 }}
+    />
+  </LineChart>
+</ResponsiveContainer>
+
         </div>
 
         {/* Billing Details Table */}

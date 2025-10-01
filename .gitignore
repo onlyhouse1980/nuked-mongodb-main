@@ -12,3 +12,4 @@ yarn-error.log
 .pnp.loader.mjs
 yarn.lock
 yarn.lock
+package-lock.json
