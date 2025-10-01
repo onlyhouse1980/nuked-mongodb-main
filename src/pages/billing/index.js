@@ -133,6 +133,7 @@ export default function BillingDashboard() {
           <div className="text-gray-600 mb-4">{error}</div>
           <button 
             onClick={() => setError(null)}
+            style={{backgroundColor: '#3f51b5'}}
             className="bg-blue-700 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           >
             Try Again
@@ -159,6 +160,7 @@ export default function BillingDashboard() {
               <li key={`${rec.last_name || 'match'}_${rec.meter_serialNum || i}`}>
                 <button
                   onClick={() => handlePickMatch(i)}
+                  style={{backgroundColor: '#3f51b5'}}
                   className="w-full flex items-center justify-between rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition p-4"
                 >
                   {/* CHANGED: show the exact last_name from the record, no artificial underscores or numbering */}
@@ -174,6 +176,7 @@ export default function BillingDashboard() {
           <div className="mt-6 flex gap-3">
             <button
               onClick={handleReset}
+              style={{backgroundColor: '#3f51b5'}}
               className="px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700"
             >
               New Search
@@ -204,6 +207,7 @@ export default function BillingDashboard() {
             />
             <button
               type="submit"
+              style={{backgroundColor: '#3f51b5'}}
               className="bg-blue-700 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >
               Search
@@ -277,6 +281,7 @@ export default function BillingDashboard() {
           </div>
           <button
             onClick={handleReset}
+            style={{backgroundColor: '#3f51b5'}}
             className="bg-blue-700 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           >
             New Search
@@ -343,7 +348,7 @@ export default function BillingDashboard() {
         </div>
 
         {/* Billing Details Table */}
-        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div className="bg-white pl-3 rounded-xl shadow-lg overflow-hidden">
           <div className="p-6 bg-gradient-to-r from-blue-600 to-indigo-600">
             <h2 className="text-xl font-semibold text-white flex items-center">
               <Calendar className="w-5 h-5 mr-2" />
