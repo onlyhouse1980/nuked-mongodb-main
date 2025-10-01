@@ -272,7 +272,7 @@ export default function BillingDashboard() {
           <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-purple-500">
             <div className="flex pl-2 items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600 mb-1">Total Usage - last 2 years</p>
+                <p className="text-sm text-gray-600 mb-1">Total Usage (2 yrs.)</p>
                 <p className="text-3xl font-bold text-gray-800">
                   {totalUsage.toLocaleString()} gallons
                 </p>
@@ -287,9 +287,9 @@ export default function BillingDashboard() {
           <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-orange-500">
             <div className="flex pl-2 items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600 mb-1">Total Billed</p>
+                <p className="text-sm text-gray-600 mb-1">Total Billed (2 yrs.)</p>
                 <p className="text-3xl font-bold text-gray-800">
-                  ${totalBilled.toFixed(2)} all periods (two years)
+                  ${totalBilled.toFixed(2)} 
                 </p>
                
               </div>
