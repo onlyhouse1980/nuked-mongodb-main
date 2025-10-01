@@ -4,6 +4,33 @@ import { DollarSign, Droplets, TrendingUp, Calendar } from 'lucide-react';
 
 /* ----------------------- helpers ----------------------- */
 
+// turns "Dec 04, 2023" -> "12/04/2023"
+const formatChartLabelMMDDYYYY = (label) => {
+  const str = String(label);
+
+  // if it's already mm/dd/yyyy, leave it
+  if (/^\d{2}\/\d{2}\/\d{4}$/.test(str)) return str;
+
+  const monthMap = {
+    jan: '01', feb: '02', mar: '03', apr: '04', may: '05', jun: '06',
+    jul: '07', aug: '08', sep: '09', oct: '10', nov: '11', dec: '12'
+  };
+
+  // expect "Dec 04, 2023"
+  const parts = str.split(' ');
+  if (parts.length < 3) return str;
+
+  const mon = parts[0].slice(0,3).toLowerCase(); // "Dec" -> "dec"
+  const day = (parts[1] || '').replace(',', ''); // "04," -> "04"
+  const year = parts[2];
+
+  const mm = monthMap[mon];
+  if (!mm || !day || !year) return str;
+
+  return `${mm}/${day.padStart(2, '0')}/${year}`;
+};
+
+
 const fetchAllCustomers = async () => {
   const res = await fetch('/api/spreadsheet/fetch');
   if (!res.ok) throw new Error('Failed to fetch customer data');
@@ -191,10 +218,10 @@ export default function BillingDashboard() {
   if (!customerData) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-8">
-        <div className="bg-white rounded-xl shadow-lg p-8 max-w-md w-full">
+        <div className="bg-white pl-2 rounded-xl shadow-lg p-8 max-w-md w-full">
           <h1 className="text-2xl font-bold text-gray-800 mb-6">Customer Billing Lookup</h1>
           <form onSubmit={handleSearch}>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block pr-2 text-sm font-medium text-gray-700 mb-2">
               Customer Last Name (partial ok)
             </label>
             <input
@@ -265,161 +292,189 @@ export default function BillingDashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
       <div className="max-w-7xl mx-auto">
+        
         {/* Header */}
-        <div className="mb-8 flex justify-between items-start">
-          <div>
-            <h1 className="text-4xl font-bold text-gray-800 mb-2">
-              Customer Billing Dashboard
-            </h1>
-            <p className="text-lg text-gray-600">
-              {/* CHANGED: keep the exact DB value (don’t title-case) */}
-              Account: {customerData.last_name} {/* CHANGED */}
-            </p>
-            <p className="text-sm text-gray-500">
-              Meter: {customerData.meter_serialNum}
-            </p>
-          </div>
-          <button
-            onClick={handleReset}
-            style={{backgroundColor: '#3f51b5'}}
-            className="bg-blue-700 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          >
-            New Search
-          </button>
-        </div>
+            <div className="mb-8 flex justify-between items-start">
+            <div>
+                <h1 className="text-4xl font-bold text-gray-800 mb-2">
+                Customer Billing Dashboard
+                </h1>
+                <p className="text-lg text-gray-600">
+                {/* CHANGED: keep the exact DB value (don’t title-case) */}
+                Account: {customerData.last_name} {/* CHANGED */}
+                </p>
+                <p className="text-sm text-gray-500">
+                Meter: {customerData.meter_serialNum}
+                </p>
+            </div>
+            <button
+                onClick={handleReset}
+                style={{backgroundColor: '#3f51b5'}}
+                className="bg-blue-700 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
+                New Search
+            </button>
+            </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-500">
-            <div className="flex pl-2 items-center justify-between">
-              <div className='flex flex-col'>
-                <p className="text-sm text-gray-600 mb-1">Latest Bill</p>
-                <p className="text-3xl font-bold text-gray-800">
-                  ${latestBill ? latestBill.amount.toFixed(2) : '0.00'}
-                </p>
-              </div>
-              <div className="bg-green-100 p-3 rounded-full">
-                <DollarSign className="w-8 h-8 text-blue-600" />
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-500">
+                <div className="flex pl-2 items-center justify-between">
+                <div className='flex flex-col'>
+                    <p className="text-sm text-gray-600 mb-1">Latest Bill</p>
+                    <p className="text-3xl font-bold text-gray-800">
+                    ${latestBill ? latestBill.amount.toFixed(2) : '0.00'}
+                    </p>
+                </div>
+                <div className="bg-green-100 p-3 rounded-full">
+                    <DollarSign className="w-8 h-8 text-blue-600" />
+                </div>
+                </div>
             </div>
-          </div>
 
-          <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-green-500">
-            <div className="flex pl-2 items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600 mb-1">Latest Usage</p>
-                <p className="text-3xl font-bold text-gray-800">
-                  {latestBill ? latestBill.usage.toLocaleString() : '0'} gallons
-                </p>
-              </div>
-              <div className="bg-green-100 p-3 rounded-full">
-                <Droplets className="w-8 h-8 text-green-600" />
-              </div>
+            <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-green-500">
+                <div className="flex pl-2 items-center justify-between">
+                <div>
+                    <p className="text-sm text-gray-600 mb-1">Latest Usage</p>
+                    <p className="text-3xl font-bold text-gray-800">
+                    {latestBill ? latestBill.usage.toLocaleString() : '0'} gallons
+                    </p>
+                </div>
+                <div className="bg-green-100 p-3 rounded-full">
+                    <Droplets className="w-8 h-8 text-green-600" />
+                </div>
+                </div>
             </div>
-          </div>
 
-          <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-purple-500">
-            <div className="flex pl-2 items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600 mb-1">Total Usage (2 yrs.)</p>
-                <p className="text-3xl font-bold text-gray-800">
-                  {totalUsage.toLocaleString()} gallons
-                </p>
-              </div>
-              <div className="bg-purple-100 p-3 rounded-full">
-                <TrendingUp className="w-8 h-8 text-purple-600" />
-              </div>
+            <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-purple-500">
+                <div className="flex pl-2 items-center justify-between">
+                <div>
+                    <p className="text-sm text-gray-600 mb-1">Total Usage (2 yrs.)</p>
+                    <p className="text-3xl font-bold text-gray-800">
+                    {totalUsage.toLocaleString()} gallons
+                    </p>
+                </div>
+                <div className="bg-purple-100 p-3 rounded-full">
+                    <TrendingUp className="w-8 h-8 text-purple-600" />
+                </div>
+                </div>
             </div>
-          </div>
 
-          <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-orange-500">
-            <div className="flex pl-2 items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600 mb-1">Total Billed (2 yrs.)</p>
-                <p className="text-3xl font-bold text-gray-800">
-                  ${totalBilled.toFixed(2)}
-                </p>
-              </div>
-              <div className="bg-orange-100 p-3 rounded-full">
-                <DollarSign className="w-8 h-8 text-orange-600" />
-              </div>
+            <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-orange-500">
+                <div className="flex pl-2 items-center justify-between">
+                <div>
+                    <p className="text-sm text-gray-600 mb-1">Total Billed (2 yrs.)</p>
+                    <p className="text-3xl font-bold text-gray-800">
+                    ${totalBilled.toFixed(2)}
+                    </p>
+                </div>
+                <div className="bg-orange-100 p-3 rounded-full">
+                    <DollarSign className="w-8 h-8 text-orange-600" />
+                </div>
+                </div>
             </div>
-          </div>
+            </div>
+
+    {/* Billing Details Table */}
+        <div className="bg-white pl-2 rounded-xl shadow-lg overflow-hidden">
+            <div className="p-6 bg-gradient-to-r from-blue-600 to-indigo-600">
+                <h2 className="text-xl font-semibold text-white flex items-center">
+                <Calendar className="w-5 h-5 mr-2" />
+                Billing History
+                </h2>
+            </div>
+            <div className="overflow-x-auto">
+                <table className="w-full">
+                <thead className="bg-gray-50">
+                    <tr>
+                    <th className="px-6 py-3 text-left  text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Billing Period
+                    </th>
+                    <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Previous Reading
+                    </th>
+                    <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Current Reading
+                    </th>
+                    <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Usage (Gallons)
+                    </th>
+                    <th className="px-6 py-3 text-left  text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Amount
+                    </th>
+                    </tr>
+                </thead>
+
+                <tbody className="bg-white divide-y divide-gray-200">
+                    {billingPeriods.slice().reverse().map((period, idx) => (
+                    <tr key={idx} className="hover:bg-gray-50 transition-colors">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {period.period}
+                        </td>
+
+                        {/* centered */}
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 text-center">
+                        {period.previousReading.toLocaleString()}
+                        </td>
+
+                        {/* centered */}
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center">
+                        {period.currentReading.toLocaleString()}
+                        </td>
+
+                        {/* centered */}
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center">
+                        {period.usage.toLocaleString()}
+                        {period.usage > 6000 && (
+                            <span className="ml-2 text-xs text-orange-600 font-medium">
+                            ({(period.usage - 6000).toLocaleString()} over limit)
+                            </span>
+                        )}
+                        </td>
+
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 text-right">
+                        ${period.amount.toFixed(2)}
+                        </td>
+                    </tr>
+                    ))}
+                </tbody>
+                </table>
+            </div>
         </div>
 
-        {/* Billing Details Table */}
-        <div className="bg-white pl-3 rounded-xl shadow-lg overflow-hidden">
-          <div className="p-6 bg-gradient-to-r from-blue-600 to-indigo-600">
-            <h2 className="text-xl font-semibold text-white flex items-center">
-              <Calendar className="w-5 h-5 mr-2" />
-              Billing History
+
+    {/* Chart */}
+        <div className="bg-white pl-2 pr-2 rounded-xl shadow-lg p-6 mb-8">
+            <h2 className="text-xl pl-4 pt-2 font-semibold text-gray-800 mb-4">
+                Meter Reading History
             </h2>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Billing Period</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Previous Reading</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Current Reading</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Usage (Gallons)</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {billingPeriods.slice().reverse().map((period, idx) => (
-                  <tr key={idx} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{period.period}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{period.previousReading.toLocaleString()}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{period.currentReading.toLocaleString()}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {period.usage.toLocaleString()}
-                      {period.usage > 6000 && (
-                        <span className="ml-2 text-xs text-orange-600 font-medium">
-                          ({(period.usage - 6000).toLocaleString()} over limit)
-                        </span>
-                      )}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      ${period.amount.toFixed(2)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+            <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={chartData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="date" tickFormatter={formatChartLabelMMDDYYYY} />
+                    <YAxis />
+                    <Tooltip labelFormatter={formatChartLabelMMDDYYYY} />
+                    <Line 
+                    type="monotone" 
+                    dataKey="usage" 
+                    stroke="#3b82f6" 
+                    strokeWidth={2}
+                    dot={{ fill: '#3b82f6', r: 5 }}
+                    />
+                </LineChart>
+            </ResponsiveContainer>
+
         </div>
 
-        {/* Chart */}
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-          <h2 className="text-xl pl-4 pt-2 font-semibold text-gray-800 mb-4">
-            Meter Reading History
-          </h2>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={chartData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" />
-              <YAxis />
-              <Tooltip />
-              <Line 
-                type="monotone" 
-                dataKey="usage" 
-                stroke="#3b82f6" 
-                strokeWidth={2}
-                dot={{ fill: '#3b82f6', r: 5 }}
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-
-        {/* Pricing Info */}
+    {/* Pricing Info */}
         <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <p className="text-sm text-gray-700">
-            <strong>Pricing:</strong> First 6,000 gallons per billing period are included.
-            Usage over 6,000 gallons is billed at <span className="font-semibold">$0.025</span> per gallon (2.5¢/gal).
-          </p>
+            <p className="text-sm text-gray-700">
+                <strong>Pricing:</strong> 
+                    First 6,000 gallons per billing period are included.
+                    Usage over 6,000 gallons is billed at <span className="font-semibold">$0.025</span> per gallon (2.5¢/gal).
+                </p>
+            </div>
         </div>
-      </div>
     </div>
   );
 }
