@@ -349,8 +349,11 @@ export default function BillingDashboard() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {billingPeriods.map((period, idx) => (
-                  <tr key={idx} className="hover:bg-gray-50 transition-colors">
+                {billingPeriods
+  .slice()       // make a shallow copy to avoid mutating original
+  .reverse()     // reverse the copy
+  .map((period, idx) => (
+    <tr key={idx} className="hover:bg-gray-50 transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {period.period}
                     </td>
