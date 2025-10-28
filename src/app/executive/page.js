@@ -11,22 +11,22 @@ import styles from "../../styles/executive.module.css";
   },
 }; */
 
-const item = {
+/* const item = {
   hidden: { opacity: 0 },
   show: { opacity: 1 },
-};
+}; */
 
 const Executive = () => (
-  <div
+/*   <div
     exit={{ opacity: 0 }}
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
-  >    
+  >     */
     <div
       className={styles.bgcontainer}
     //  variants={container}
-      initial="hidden"
-      animate="show"
+    //  initial="hidden"
+    //  animate="show"
     >
       <h2 className="text-center">
         <b>OBCG</b>
@@ -38,7 +38,7 @@ const Executive = () => (
         <div className={styles.content}>
           <img
             src="/Images/WebPFiles/Dennis.webp"
-            loading="lazy"
+           //  loading="lazy"
             width="300"
             alt="Member President Photo Dennis"
             className={styles.Image5}
@@ -56,7 +56,7 @@ const Executive = () => (
         <div className={styles.content}>
           <img
             src="/Images/WebPFiles/IMG-20250624-WA0009.webp"
-            loading="lazy"
+           //  loading="lazy"
             width="300"
             alt="Member Vice President Photo Eric Campbell"
             className={styles.Image5}
@@ -74,7 +74,7 @@ const Executive = () => (
         <div className={styles.content}>
           <img
             src="/Images/WebPFiles/IMG-20250624-WA0008.webp"
-            loading="lazy"
+           //  loading="lazy"
             width="300"
             alt="Member Photo Secretary/Treasurer"
             className={styles.Image5}
@@ -91,7 +91,7 @@ const Executive = () => (
         </div>
       </div>
     </div>
-  </div>
+//  </div>
 );
 
 export default Executive;
