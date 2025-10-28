@@ -17,13 +17,26 @@ body {
     sans-serif;
 }
 
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-content {
+  flex: 1;
+  padding: 90px 16px 48px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
 Link {
   color: white !important;
   text-decoration: none;
 }
 
 .forgotten {
-  color: black!;
+  color: black !important;
 }
 
 .card {

@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from '../styles/WelcomePage.module.css'
-import Image from "next/legacy/image";
+import Image from 'next/image'
 
 const FooterPage = () => {
   return (
