@@ -7,12 +7,23 @@ import SaveIcon from '@mui/icons-material/Save';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import styles from '../styles/Spreadsheet.module.css';
 
+const DEFAULT_VISIBLE_COLUMNS = [
+  'last_name',
+  'meter_serialNum',
+  'lot_number',
+  'feb01_25',
+  'apr01_25',
+  'jun01_25',
+  'aug01_25',
+  'oct01_25',
+];
+
 const Spreadsheet = () => {
   const [data, setData] = useState([]);
   const [headers, setHeaders] = useState([]);
   const [error, setError] = useState(null);
 
-  const [visibleColumns, setVisibleColumns] = useState(['last_name', 'meter_serialNum', 'lot_number', 'feb01_25', 'apr01_25', 'jun01_25', 'last_name', 'aug01_25', 'oct01_25']);
+  const [visibleColumns, setVisibleColumns] = useState(DEFAULT_VISIBLE_COLUMNS);
 
   useEffect(() => {
     fetchData();
@@ -41,6 +52,9 @@ const Spreadsheet = () => {
   const handleAddColumn = () => {
     const newHeader = prompt('Enter column name:');
     if (newHeader) {
+      if (visibleColumns.includes(newHeader)) {
+        return;
+      }
       setHeaders(prevHeaders => {
         const newHeaders = [...prevHeaders, newHeader];
         setVisibleColumns([...visibleColumns, newHeader]); // Make new column visible by default
