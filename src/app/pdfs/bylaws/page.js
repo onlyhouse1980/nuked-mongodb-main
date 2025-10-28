@@ -4,6 +4,7 @@ export default function Page() {
   return (
     <div className="container">
       <iframe
+        title="Current Bylaws"
         src={embedURL}
         width="100%"
         height="1000px"
