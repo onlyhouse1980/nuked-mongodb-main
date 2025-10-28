@@ -1,4 +1,5 @@
 import styles from "../../styles/executive.module.css";
+import Image from "next/image";
 // import { motion } from "framer-motion";
 
 /* const container = {
@@ -36,10 +37,10 @@ const Executive = () => (
       <div className={styles.divBlock}>
        
         <div className={styles.content}>
-          <img
+          <Image
             src="/Images/WebPFiles/Dennis.webp"
            //  loading="lazy"
-            width="300"
+            width="300" height="300"
             alt="Member President Photo Dennis"
             className={styles.Image5}
           />
@@ -54,10 +55,10 @@ const Executive = () => (
           </div>
         </div>
         <div className={styles.content}>
-          <img
+          <Image
             src="/Images/WebPFiles/IMG-20250624-WA0009.webp"
            //  loading="lazy"
-            width="300"
+            width="300" height="300"
             alt="Member Vice President Photo Eric Campbell"
             className={styles.Image5}
           />
@@ -72,10 +73,10 @@ const Executive = () => (
           </div>
         </div>
         <div className={styles.content}>
-          <img
+          <Image
             src="/Images/WebPFiles/IMG-20250624-WA0008.webp"
            //  loading="lazy"
-            width="300"
+            width="300" height="300"
             alt="Member Photo Secretary/Treasurer"
             className={styles.Image5}
           />
