@@ -1,9 +1,7 @@
-'use client';
-
 import styles from "../../styles/executive.module.css";
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
 
-const container = {
+/* const container = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
@@ -11,7 +9,7 @@ const container = {
       staggerChildren: 0.5,
     },
   },
-};
+}; */
 
 const item = {
   hidden: { opacity: 0 },
@@ -19,14 +17,14 @@ const item = {
 };
 
 const Executive = () => (
-  <motion.div
+  <div
     exit={{ opacity: 0 }}
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
   >    
-    <motion.div
+    <div
       className={styles.bgcontainer}
-      variants={container}
+    //  variants={container}
       initial="hidden"
       animate="show"
     >
@@ -37,8 +35,8 @@ const Executive = () => (
       </h2>
       <div className={styles.divBlock}>
        
-        <motion.div variants={item} className={styles.content}>
-          <motion.img
+        <div className={styles.content}>
+          <img
             src="/Images/WebPFiles/Dennis.webp"
             loading="lazy"
             width="300"
@@ -54,9 +52,9 @@ const Executive = () => (
               
             </p>
           </div>
-        </motion.div>
-        <motion.div variants={item} className={styles.content}>
-          <motion.img
+        </div>
+        <div className={styles.content}>
+          <img
             src="/Images/WebPFiles/IMG-20250624-WA0009.webp"
             loading="lazy"
             width="300"
@@ -72,9 +70,9 @@ const Executive = () => (
               
             </p>
           </div>
-        </motion.div>
-        <motion.div variants={item} className={styles.content}>
-          <motion.img
+        </div>
+        <div className={styles.content}>
+          <img
             src="/Images/WebPFiles/IMG-20250624-WA0008.webp"
             loading="lazy"
             width="300"
@@ -90,10 +88,10 @@ const Executive = () => (
               
             </p>
           </div>
-        </motion.div>
+        </div>
       </div>
-    </motion.div>
-  </motion.div>
+    </div>
+  </div>
 );
 
 export default Executive;
