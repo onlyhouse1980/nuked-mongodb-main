@@ -2330,7 +2330,7 @@ function December2025() {
                       padding: 0,
                     }}
                   >
-                    (10/1/25 - 11/01/25)
+                    (10/1/25 - 12/01/25)
                   </p>
                 </td>
                 <td className={styles.td3}>
