@@ -1,6 +1,6 @@
 export default function Consumer2024() {
   const embedURL =
-    "https://drive.google.com/file/d/1r-7LrFBA-f6RaEHEXccup7mjR6X3xZoP";
+    "https://drive.google.com/file/d/1r-7LrFBA-f6RaEHEXccup7mjR6X3xZoP/preview";
   return (
     <div className="container">
       <h5>Consumer Confidence 2024</h5>
