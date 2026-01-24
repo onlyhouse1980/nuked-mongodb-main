@@ -1,6 +1,6 @@
 export default function Consumer2024() {
   const embedURL =
-    "/CCR_April_2025.pdf";
+    "https://drive.google.com/file/d/1r-7LrFBA-f6RaEHEXccup7mjR6X3xZoP";
   return (
     <div className="container">
       <h5>Consumer Confidence 2024</h5>
