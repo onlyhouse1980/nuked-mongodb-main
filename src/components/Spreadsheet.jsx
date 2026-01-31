@@ -11,12 +11,12 @@ const DEFAULT_VISIBLE_COLUMNS = [
   'last_name',
   'meter_serialNum',
   'lot_number',
-  'feb01_25',
   'apr01_25',
   'jun01_25',
   'aug01_25',
   'oct01_25',
   'dec01_25',
+  'feb01_26',
 ];
 
 const Spreadsheet = () => {
