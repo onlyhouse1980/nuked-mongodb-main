@@ -63,7 +63,7 @@ import { useCallback } from 'react';
         title: '2025 Parade',
         url: 'parades/parade8',
         video_url:
-          'https://drive.google.com/file/d/19NPfVu1VcLl8-erG7HmIsh3gD1AaDV7A#t=0.001',
+          'https://res.cloudinary.com/dqxg7ccdf/video/upload/v1772472735/PXL_20250704_190947008.TS_lnddkd.mp4#t=0.001',
       },
     ]
     const Parades = () => {
