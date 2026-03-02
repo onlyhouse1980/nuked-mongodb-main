@@ -58,6 +58,13 @@ import { useCallback } from 'react';
         video_url:
           'https://res.cloudinary.com/dqxg7ccdf/video/upload/v1720796591/Orchard_Beach_July_4_parade_2024_sbfa5a.mp4#t=0.001',
       },
+      {
+        id: 8,
+        title: '2025 Parade',
+        url: 'parades/parade8',
+        video_url:
+          'https://drive.google.com/file/d/19NPfVu1VcLl8-erG7HmIsh3gD1AaDV7A#t=0.001',
+      },
     ]
     const Parades = () => {
 
