@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { Button } from "@/components/ui/button";
 //<div suppressHydrationWarning={true}>{process.browser}</div>;
 const MONTHLY_LIMIT = 6000;
+const OVERAGE_RATE = 0.025;
 const GAUGE_RADIUS = 80;
 const GAUGE_CIRCUMFERENCE = 2 * Math.PI * GAUGE_RADIUS;
 const GAUGE_HALF_CIRCUMFERENCE = GAUGE_CIRCUMFERENCE / 2;
@@ -44,6 +45,7 @@ function UsageSpeedometer({ usedGallons }) {
 
   const remainingGallons = Math.max(MONTHLY_LIMIT - usedGallons, 0);
   const overageGallons = Math.max(usedGallons - MONTHLY_LIMIT, 0);
+  const currentOverageCharge = overageGallons * OVERAGE_RATE;
 
   return (
     <div className={styles.resultPanel} aria-live="polite">
@@ -60,6 +62,17 @@ function UsageSpeedometer({ usedGallons }) {
             ? `${overageGallons.toLocaleString()} gallons over the ${MONTHLY_LIMIT.toLocaleString()} gallon monthly limit.`
             : `${remainingGallons.toLocaleString()} gallons remaining before the ${MONTHLY_LIMIT.toLocaleString()} gallon monthly limit.`}
         </p>
+        {overageGallons > 0 && (
+          <div className={styles.chargeCard}>
+            <p className={styles.chargeLabel}>Current Overage Charge</p>
+            <p className={styles.chargeValue}>
+              ${currentOverageCharge.toFixed(2)}
+            </p>
+            <p className={styles.chargeMeta}>
+              {overageGallons.toLocaleString()} gallons at ${OVERAGE_RATE.toFixed(3)} per gallon.
+            </p>
+          </div>
+        )}
       </div>
 
       <div className={styles.gaugeWrap}>
