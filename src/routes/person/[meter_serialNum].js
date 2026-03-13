@@ -1,14 +1,17 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 import { useParams } from 'next/navigation';
 import styles from "./[meter_serialNum].module.css";
-import * as React from "react";
-import BGBlack from "@/components/BGBlack";
-import Link from 'next/link'
+import Link from 'next/link';
 
 import { Button } from "@/components/ui/button";
 //<div suppressHydrationWarning={true}>{process.browser}</div>;
-var bgColors = {
+const MONTHLY_LIMIT = 6000;
+const GAUGE_RADIUS = 80;
+const GAUGE_CIRCUMFERENCE = 2 * Math.PI * GAUGE_RADIUS;
+const GAUGE_HALF_CIRCUMFERENCE = GAUGE_CIRCUMFERENCE / 2;
+
+const bgColors = {
   Default: "#81b71a",
   Blue: "#00B1E1",
   Cyan: "#37BC9B",
@@ -16,12 +19,116 @@ var bgColors = {
   Red: "#E9573F",
   Yellow: "#F6BB42",
 };
+
+function UsageSpeedometer({ usedGallons }) {
+  const gradientId = useId().replace(/:/g, '');
+  const usageRatio = usedGallons / MONTHLY_LIMIT;
+  const normalizedRatio = Math.min(Math.max(usageRatio, 0), 1);
+  const gaugeStroke = GAUGE_HALF_CIRCUMFERENCE * normalizedRatio;
+  const needleAngle = 180 + normalizedRatio * 180;
+  const needleRadians = (needleAngle * Math.PI) / 180;
+  const needleLength = 58;
+  const needleX = 100 + needleLength * Math.cos(needleRadians);
+  const needleY = 100 + needleLength * Math.sin(needleRadians);
+
+  let statusLabel = 'Within monthly limit';
+  let statusClassName = styles.statusOk;
+
+  if (usageRatio >= 1) {
+    statusLabel = 'At or above monthly limit';
+    statusClassName = styles.statusOver;
+  } else if (usageRatio >= 0.8) {
+    statusLabel = 'Approaching monthly limit';
+    statusClassName = styles.statusWarning;
+  }
+
+  const remainingGallons = Math.max(MONTHLY_LIMIT - usedGallons, 0);
+  const overageGallons = Math.max(usedGallons - MONTHLY_LIMIT, 0);
+
+  return (
+    <div className={styles.resultPanel} aria-live="polite">
+      <div className={styles.resultSummary}>
+        <p className={styles.resultEyebrow}>Usage snapshot</p>
+        <h3 className={styles.resultValue}>
+          {usedGallons.toLocaleString()} gallons used
+        </h3>
+        <p className={`${styles.resultStatus} ${statusClassName}`}>
+          {statusLabel}
+        </p>
+        <p className={styles.resultMeta}>
+          {overageGallons > 0
+            ? `${overageGallons.toLocaleString()} gallons over the ${MONTHLY_LIMIT.toLocaleString()} gallon monthly limit.`
+            : `${remainingGallons.toLocaleString()} gallons remaining before the ${MONTHLY_LIMIT.toLocaleString()} gallon monthly limit.`}
+        </p>
+      </div>
+
+      <div className={styles.gaugeWrap}>
+        <svg
+          className={styles.gauge}
+          viewBox="0 0 200 130"
+          role="img"
+          aria-label={`Usage speedometer showing ${Math.round(usageRatio * 100)} percent of the monthly limit`}
+        >
+          <defs>
+            <linearGradient
+              id={gradientId}
+              gradientUnits="userSpaceOnUse"
+              x1="20"
+              y1="100"
+              x2="180"
+              y2="100"
+            >
+              <stop offset="0%" stopColor={bgColors.Blue} />
+              <stop offset="60%" stopColor={bgColors.Yellow} />
+              <stop offset="100%" stopColor={bgColors.Red} />
+            </linearGradient>
+          </defs>
+          <path
+            className={styles.gaugeTrack}
+            d="M 20 100 A 80 80 0 0 1 180 100"
+            fill="none"
+            strokeWidth="16"
+            strokeDasharray={`${GAUGE_HALF_CIRCUMFERENCE} ${GAUGE_HALF_CIRCUMFERENCE}`}
+            strokeLinecap="round"
+          />
+          <path
+            className={styles.gaugeValue}
+            d="M 20 100 A 80 80 0 0 1 180 100"
+            fill="none"
+            stroke={`url(#${gradientId})`}
+            strokeWidth="16"
+            strokeDasharray={`${gaugeStroke} ${GAUGE_HALF_CIRCUMFERENCE}`}
+            strokeLinecap="round"
+          />
+          <line
+            className={styles.gaugeNeedle}
+            x1="100"
+            y1="100"
+            x2={needleX}
+            y2={needleY}
+          />
+          <circle className={styles.gaugeCenter} cx="100" cy="100" r="6" />
+          <text className={styles.gaugeLabel} x="12" y="118">0</text>
+          <text className={styles.gaugeLabel} x="89" y="18">3k</text>
+          <text className={styles.gaugeLabel} x="160" y="118">6k</text>
+        </svg>
+        <p className={styles.gaugePercent}>
+          {Math.round(usageRatio * 100)}%
+        </p>
+      </div>
+    </div>
+  );
+}
+
 const User = () => {
   const params = useParams();
   const meter_serialNum = params?.meter_serialNum;
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentReading, setCurrentReading] = useState('');
+  const [usedGallons, setUsedGallons] = useState(null);
+  const [calculationError, setCalculationError] = useState('');
 
   useEffect(() => {
     if (meter_serialNum) {
@@ -48,28 +155,26 @@ const User = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
-  function sayHi() {
-    let info1 = parseInt(document.getElementById("info1").value);
-    let info2 = parseInt(document.getElementById("info2").value);
-    var Answer = document.getElementById("Answer");
-    Answer.value = info1 - info2;
+  const baselineReading = Number(user?.feb01_26 ?? 0);
+
+  function handleCalculate() {
+    const parsedReading = Number.parseInt(currentReading, 10);
+
+    if (Number.isNaN(parsedReading)) {
+      setCalculationError('Enter your current meter reading using digits only.');
+      setUsedGallons(null);
+      return;
+    }
+
+    if (parsedReading < baselineReading) {
+      setCalculationError('Your current reading cannot be less than the February 01, 2026 reading on file.');
+      setUsedGallons(null);
+      return;
+    }
+
+    setCalculationError('');
+    setUsedGallons(parsedReading - baselineReading);
   }
-
- /*  function usedSofar(props) {
-    let info1 = parseInt(document.getElementById("info1").value);
-    let info2 = parseInt(document.getElementById("info2").value);
-    var Answer = document.getElementById("thisYear");
-    Answer.value = Number(info1 - info2) + Number(Answer.value);
-  } */
-
- /*  function moreInfo(props) {
-    let info1 = parseInt(document.getElementById("info1").value);
-    let info2 = parseInt(document.getElementById("info2").value);
-    let info3 = 48000;
-    var Answer = document.getElementById("Percent");
-
-    Answer.value = (((info1 - info2) / info3) * 100).toFixed(0) + "%";
-  } */
 
   return (
     <>
@@ -111,13 +216,18 @@ const User = () => {
                   label="your reading"
                   placeholder="Enter Your Reading"
                   name="uInput"
+                  inputMode="numeric"
+                  value={currentReading}
+                  onChange={(event) => {
+                    setCurrentReading(event.target.value.replace(/\D/g, ''));
+                    setCalculationError('');
+                    setUsedGallons(null);
+                  }}
                 ></input>
                 <br />
                 <Button
                   onClick={() => {
-                    sayHi();
-                    // usedSofar();
-                    // moreInfo();
+                    handleCalculate();
                   }}
                 >
                   Calculate
@@ -136,7 +246,7 @@ const User = () => {
                   }}
                   type="text"
                   id="info2"
-                  label="February 01, 2025"
+                  label="February 01, 2026"
                   value={user.feb01_26}
                   readOnly
                 />
@@ -145,7 +255,7 @@ const User = () => {
             <tr>
               <td className={styles.td3}>
                 <p className={styles.p}>
-                  Gallons used since February 01, 2025.
+                  Gallons used since February 01, 2026.
                 </p>
               </td>
               <td className={styles.td3}>
@@ -157,11 +267,25 @@ const User = () => {
                   name="utilized"
                   id="Answer"
                   label="answers"
+                  value={usedGallons ?? ''}
                   readOnly
                 ></input>
               </td>
             </tr>
-            
+            {calculationError && (
+              <tr>
+                <td className={styles.messageCell} colSpan={2}>
+                  <p className={styles.errorText}>{calculationError}</p>
+                </td>
+              </tr>
+            )}
+            {usedGallons !== null && (
+              <tr>
+                <td className={styles.resultCell} colSpan={2}>
+                  <UsageSpeedometer usedGallons={usedGallons} />
+                </td>
+              </tr>
+            )}
 
             <tr>
               <td className={styles.h5head}>
@@ -186,6 +310,6 @@ const User = () => {
       `}</style>
     </>
   );
-}
+};
 
-export default User
+export default User;
