@@ -8,7 +8,7 @@ const NAV_ITEMS = [
   { key: "home", type: "link", label: "Home", href: "/" },
   { key: "about", type: "link", label: "About", href: "/about" },
   { key: "articles", type: "link", label: "Articles of Inc", href: "/articles" },
-  { key: "executive", type: "link", label: "Executive Board", href: "/executive" },
+
   {
     key: "documents",
     type: "dropdown",
@@ -34,7 +34,7 @@ const NAV_ITEMS = [
       { label: "CCR 2020", href: "/pdfs/consumer2021" },
     ],
   },
-  { key: "register", type: "link", label: "Check Usage", href: "/register" },
+  
   {
     key: "newsletters",
     type: "dropdown",
