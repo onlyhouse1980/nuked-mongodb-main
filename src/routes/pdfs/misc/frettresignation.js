@@ -4,7 +4,7 @@ import React, { useState } from "react";
 export const App = () => {
   const [embedURL] = useState(
     
-  "https://drive.google.com/file/d/1mEuTMNOs_fQoFJquYRxmOOpmJd_SvAPw/view?usp=sharing"
+  "https://drive.google.com/file/d/1mEuTMNOs_fQoFJquYRxmOOpmJd_SvAPw/preview"
   );
   return (
     <div className="container">
