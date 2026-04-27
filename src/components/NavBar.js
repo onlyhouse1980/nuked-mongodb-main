@@ -20,6 +20,7 @@ const NAV_ITEMS = [
       { label: "Mason County Franchise Permit", href: "/pdfs/franchise-permit"},
       { label: "FAQs", href: "/pdfs/faqs"},
       { label: "Misc. Files", href: "/misc" },
+      { label: "4.15.26 President Resignation Ltr.", href: "/pdfs/misc/frettresignation" },
     ],
   },
   {
