@@ -1,9 +1,5 @@
 import '@/lib/react-compat';
-import 'bootstrap-css-only/css/bootstrap.min.css';
-import '../styles/globals.css';
-import '../css/customcss.css';
-import '../components/Marquee.scss';
-import '@fortawesome/fontawesome-svg-core/styles.css';
+import '../styles/main-bundle.scss';
 import Navbar from '../components/NavBar';
 import Footer from '../components/Footer';
 
