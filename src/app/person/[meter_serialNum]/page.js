@@ -166,7 +166,6 @@ const User = () => {
     }
   }, [meter_serialNum]);
 
-  if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
   const baselineReading = Number(user?.feb01_26 ?? 0);
@@ -198,13 +197,13 @@ const User = () => {
             <tr>
               <th className={styles.th2}>
                 <h4>
-                  <span> Meter Serial # : {user.meter_serialNum}</span>
+                  <span> Meter Serial # : {user?.meter_serialNum || meter_serialNum || '...'}</span>
                   <br />
                 </h4>
               </th>
               <th className={styles.th2}>
                 <h4>
-                  <span>{user.last_name} </span>
+                  <span>{user?.last_name || 'Loading...'} </span>
                 </h4>
               </th>
             </tr>
@@ -227,7 +226,7 @@ const User = () => {
                   }}
                   type="text"
                   id="info1"
-                  label="your reading"
+                  aria-label="your reading"
                   placeholder="Enter Your Reading"
                   name="uInput"
                   inputMode="numeric"
@@ -260,8 +259,8 @@ const User = () => {
                   }}
                   type="text"
                   id="info2"
-                  label="February 01, 2026"
-                  value={user.feb01_26}
+                  aria-label="February 01, 2026"
+                  value={user?.feb01_26 || ''}
                   readOnly
                 />
               </td>
@@ -280,7 +279,7 @@ const User = () => {
                   type="text"
                   name="utilized"
                   id="Answer"
-                  label="answers"
+                  aria-label="answers"
                   value={usedGallons ?? ''}
                   readOnly
                 ></input>
@@ -307,7 +306,7 @@ const User = () => {
                   *If you are having problems with this
                   <br />
                   form, we recommend reading &quot;
-                  <Link href="/howtoreadmeter.pdf">How to read your meter?</Link>
+                  <Link href="/howtoreadmeter.pdf" style={{ color: '#b91c1c', textDecoration: 'underline' }}>How to read your meter?</Link>
                   &quot;{" "}
                 </h5>
               </td>
@@ -317,11 +316,6 @@ const User = () => {
         </table>
       
 
-      <style jsx>{`
-        Link {
-          color: red;
-        }
-      `}</style>
     </>
   );
 };
