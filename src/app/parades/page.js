@@ -64,17 +64,18 @@ const media_urls = [
 ]
 
 const getOptimizedPoster = (videoUrl) => {
-  // Force .webp directly for modern image format and use w_400 to reduce dimensions
+  // Force .webp directly for modern image format and use w_310 to reduce dimensions
   let url = videoUrl.split('#')[0].replace('.mp4', '.webp');
   if (url.includes('/upload/q_auto,vc_auto/')) {
-    return url.replace('/upload/q_auto,vc_auto/', '/upload/c_scale,w_400,q_auto/');
+    return url.replace('/upload/q_auto,vc_auto/', '/upload/c_scale,w_310,q_auto:eco/');
   } else {
-    return url.replace('/upload/', '/upload/c_scale,w_400,q_auto/');
+    return url.replace('/upload/', '/upload/c_scale,w_310,q_auto:eco/');
   }
 };
 const Parades = () => {
   return (
     <>
+      <link rel="preload" as="image" href={getOptimizedPoster(media_urls[0].video_url)} fetchPriority="high" crossOrigin="anonymous" />
       <div className={styles.headline}>
         <h1 className='text-center'>OBCG Annual 4th of July Parade</h1>
       </div>
