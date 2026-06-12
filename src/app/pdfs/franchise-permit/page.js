@@ -1,4 +1,4 @@
-export default function Consumer2024() {
+export default function franchisepermit() {
   const embedURL =
     "/franchisepermit.pdf";
   return (
