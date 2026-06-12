@@ -8,6 +8,7 @@ const NAV_ITEMS = [
   { key: "home", type: "link", label: "Home", href: "/" },
   { key: "about", type: "link", label: "About", href: "/about" },
   { key: "articles", type: "link", label: "Articles of Inc", href: "/articles" },
+  { key: "usage", type: "link", label: "Check Usage", href: "/register" },
 
   {
     key: "documents",
@@ -17,8 +18,8 @@ const NAV_ITEMS = [
       { label: "Water Use Efficiency", href: "/pdfs/efficiency" },
       { label: "Water System Plan", href: "/pdfs/sysplan" },
       { label: "Current Bylaws", href: "/pdfs/bylaws" },
-      { label: "Mason County Franchise Permit", href: "/pdfs/franchise-permit"},
-      { label: "FAQs", href: "/pdfs/faqs"},
+      { label: "Mason County Franchise Permit", href: "/pdfs/franchise-permit" },
+      { label: "FAQs", href: "/pdfs/faqs" },
       { label: "Misc. Files", href: "/misc" },
       { label: "President Resignation Ltr. 4.15.26", href: "/pdfs/misc/frettresignation" },
     ],
@@ -35,7 +36,7 @@ const NAV_ITEMS = [
       { label: "CCR 2020", href: "/pdfs/consumer2021" },
     ],
   },
-  
+
   {
     key: "newsletters",
     type: "dropdown",
@@ -153,9 +154,8 @@ const NavBar = () => {
             return (
               <li
                 key={item.key}
-                className={`${styles.menuItem} ${
-                  openDropdown === item.key ? styles.dropdownOpen : ""
-                }`}
+                className={`${styles.menuItem} ${openDropdown === item.key ? styles.dropdownOpen : ""
+                  }`}
               >
                 <div className={styles.dropdown}>
                   <button
