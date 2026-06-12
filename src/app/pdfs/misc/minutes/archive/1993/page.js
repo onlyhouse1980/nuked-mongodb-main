@@ -1,5 +1,20 @@
-import Component from '@/routes/pdfs/misc/minutes/archive/1993';
+import React from "react";
+import styles from "@/styles/pdfs.module.css";
 
-export default function Page() {
-  return <Component />;
-}
+export const App = () => {
+  const embedURL = 
+    "https://drive.google.com/file/d/1YNm4-jI4pYMvA2hYYhwUkcK-kq1GIipo/preview"
+  ;
+  return (
+    <div className="container">
+      <iframe
+        className={styles.iframPDF}
+        src={embedURL}
+        width="100%"
+        height="530"
+      ></iframe>
+    </div>
+  );
+};
+
+export default App;

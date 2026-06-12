@@ -1,5 +1,16 @@
-import Component from '@/routes/spreadsheet/input';
+'use client';
 
-export default function Page() {
-  return <Component />;
-}
+// pages/spreadsheet/input.js
+import Spreadsheet from '@/components/Spreadsheet';
+import styles from "@/routes/spreadsheet/input.module.css"
+const Home = () => (
+  <div className={styles.horizscroll}>
+    <h1>OBCG Meter Readings</h1>
+    <div className= {styles.scroll}>
+    
+    <Spreadsheet />
+    </div>
+  </div>
+);
+
+export default Home;

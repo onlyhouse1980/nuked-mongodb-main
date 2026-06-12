@@ -7,7 +7,8 @@ const nextConfig = {
     serverActions: {
       allowedOrigins: ['localhost:3000', 'nuked-mongodb-main.vercel.app']
     }
-  }
+  },
+  cacheComponents: true
 };
 
 module.exports = nextConfig;

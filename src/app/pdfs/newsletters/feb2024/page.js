@@ -1,5 +1,20 @@
-import Component from '@/routes/pdfs/newsletters/feb2024';
+import React from "react";
+import styles from "@/styles/pdfs.module.css";
 
-export default function Page() {
-  return <Component />;
-}
+export const App = () => {
+  const embedURL = 
+    "https://drive.google.com/file/d/15BXMnZLRHUeqsYawWAHK4qr_i1LxSEF3/preview"
+  ;
+  return (
+    <div className="container">
+      <iframe
+        className={styles.iframPDF}
+        src={embedURL}
+        width="100%"
+        height="1000px"
+      ></iframe>
+    </div>
+  );
+};
+
+export default App;

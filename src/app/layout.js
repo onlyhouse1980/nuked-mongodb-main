@@ -4,8 +4,9 @@ import '../styles/globals.css';
 import '../css/customcss.css';
 import '../components/Marquee.scss';
 import '@fortawesome/fontawesome-svg-core/styles.css';
+import Navbar from '../components/NavBar';
+import Footer from '../components/Footer';
 
-import Layout from '@/components/Layout';
 import { Providers } from './providers';
 
 export const metadata = {
@@ -18,9 +19,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
+        <Navbar />
         <Providers>
-          <Layout>{children}</Layout>
+          <main className="app-content">{children}</main>
         </Providers>
+        <Footer />
       </body>
     </html>
   );
