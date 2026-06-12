@@ -1,8 +1,10 @@
 {
-    "compilerOptions": {
-      "paths": {
-        "@/*": ["./src/*"]
-      }
+  "compilerOptions": {
+    "jsx": "react",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
     }
   }
-  
+}
