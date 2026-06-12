@@ -6,7 +6,8 @@ const nextConfig = {
   experimental: {
     serverActions: {
       allowedOrigins: ['localhost:3000', 'nuked-mongodb-main.vercel.app']
-    }
+    },
+    optimizeCss: true
   },
   images: {
     qualities: [50, 75, 85, 90, 100]

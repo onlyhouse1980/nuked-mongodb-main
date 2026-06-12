@@ -35,7 +35,6 @@ export default function index() {
       <div>
         <motion.div
           exit={{ opacity: 0 }}
-          initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
           <motion.div
@@ -57,7 +56,8 @@ export default function index() {
               src="/Images/WebPFiles/psound.webp"
               fill
               style={{ objectFit: "cover" }}
-              quality={85}
+              quality={50}
+              priority
             />
           </motion.div>
           <motion.div
@@ -78,6 +78,7 @@ export default function index() {
               fill
               style={{ objectFit: "cover" }}
               quality={50}
+              sizes="(max-width: 768px) 100vw, 33vw"
             />
           </motion.div>
           <motion.div
@@ -98,7 +99,8 @@ export default function index() {
               src="/Images/WebPFiles/boat.webp"
               fill
               style={{ objectFit: "cover" }}
-              quality={85}
+              quality={50}
+              sizes="(max-width: 768px) 100vw, 33vw"
             />
           </motion.div>
           {/* <motion.div animate={{
@@ -116,7 +118,7 @@ export default function index() {
         src="/Images/WebPFiles/whale.webp"
         layout="fill"
         objectFit="cover"
-        quality={85}
+        priority
       />
     </motion.div> */}
           <motion.div
@@ -136,7 +138,8 @@ export default function index() {
               src="/Images/WebPFiles/hero-bg.webp"
               fill
               style={{ objectFit: "cover" }}
-              quality={85}
+              quality={50}
+              sizes="(max-width: 768px) 100vw, 33vw"
             />
           </motion.div>
           <motion.div
@@ -157,7 +160,8 @@ export default function index() {
               /*filter="blur"*/
               fill
               style={{ objectFit: "cover" }}
-              quality={85}
+              quality={50}
+              sizes="(max-width: 768px) 100vw, 33vw"
             />
           </motion.div>
         </motion.div>

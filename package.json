@@ -23,6 +23,7 @@
     "bootstrap-css-only": "^4.4.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "critters": "^0.0.23",
     "framer-motion": "^12.40.0",
     "jsonwebtoken": "9.0.2",
     "lucide-react": "^0.544.0",
