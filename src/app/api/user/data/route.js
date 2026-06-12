@@ -3,8 +3,12 @@ import { NextResponse } from 'next/server';
 import { dbConnect } from '@/lib/dbConnect';
 import User from '@/models/User';
 
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+
 export async function GET() {
-  const userId = '...'; // TODO: replace with real session logic
+  const session = await getServerSession(authOptions);
+  const userId = session?.user?.id;
 
   if (!userId) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
