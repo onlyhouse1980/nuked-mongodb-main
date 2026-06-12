@@ -27,10 +27,6 @@ const Spreadsheet = () => {
 
   const [visibleColumns, setVisibleColumns] = useState(DEFAULT_VISIBLE_COLUMNS);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   const fetchData = async () => {
     try {
       const response = await axios.get('/api/spreadsheet/fetch');
@@ -46,6 +42,10 @@ const Spreadsheet = () => {
       setError('Error fetching data');
     }
   };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleAddRow = () => {
     setData([...data, headers.reduce((acc, header) => ({ ...acc, [header]: '' }), {})]);
