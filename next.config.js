@@ -8,6 +8,9 @@ const nextConfig = {
       allowedOrigins: ['localhost:3000', 'nuked-mongodb-main.vercel.app']
     }
   },
+  images: {
+    qualities: [50, 75, 85, 90, 100]
+  },
   cacheComponents: true
 };
 
