@@ -31,7 +31,7 @@ const email = `orchardwater@yahoo.com`;
           Email:
           <button 
             label="Write me an E-Mail">
-              <Link href = "${email}?&subject=OBCG%20Member%20Email">{email}</Link>
+              <a href={`mailto:${email}?subject=OBCG%20Member%20Email`}>{email}</a>
           </button>
         </div>
       </div>
