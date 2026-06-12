@@ -62,7 +62,7 @@ const media_urls = [
       'https://res.cloudinary.com/dqxg7ccdf/video/upload/v1772472735/PXL_20250704_190947008.TS_lnddkd.mp4#t=0.001',
   },
 ]
-export default Parades = () => {
+const Parades = () => {
   return (
     <>
       <div className={styles.headline}>
@@ -97,3 +97,4 @@ export default Parades = () => {
 
 }
 
+export default Parades;
