@@ -7,7 +7,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint src/"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -45,8 +45,8 @@
     "uuid": "^14.0.0"
   },
   "devDependencies": {
-    "eslint": "^8.19.0",
-    "eslint-config-next": "^12.2.2"
+    "eslint": "^8.57.1",
+    "eslint-config-next": "^15.0.0"
   },
   "engines": {
     "node": "20.x"
