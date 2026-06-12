@@ -15,9 +15,17 @@ export const metadata = {
     'Community water usage, billing, and organizational resources for the Orchard Beach Community Group.',
 };
 
+import { Roboto } from 'next/font/google';
+
+const roboto = Roboto({
+  weight: ['300', '400', '500', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+});
+
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={roboto.className}>
       <body>
         <Navbar />
         <Providers>

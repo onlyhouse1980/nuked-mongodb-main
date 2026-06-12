@@ -210,6 +210,7 @@ import React, {
       if (typeof onMount === "function") {
         onMount();
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
   
     // Animation duration
