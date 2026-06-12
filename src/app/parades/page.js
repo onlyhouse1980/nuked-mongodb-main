@@ -62,6 +62,16 @@ const media_urls = [
       'https://res.cloudinary.com/dqxg7ccdf/video/upload/v1772472735/PXL_20250704_190947008.TS_lnddkd.mp4#t=0.001',
   },
 ]
+
+const getOptimizedPoster = (videoUrl) => {
+  // Force .webp directly for modern image format and use w_400 to reduce dimensions
+  let url = videoUrl.split('#')[0].replace('.mp4', '.webp');
+  if (url.includes('/upload/q_auto,vc_auto/')) {
+    return url.replace('/upload/q_auto,vc_auto/', '/upload/c_scale,w_400,q_auto/');
+  } else {
+    return url.replace('/upload/', '/upload/c_scale,w_400,q_auto/');
+  }
+};
 const Parades = () => {
   return (
     <>
@@ -79,10 +89,11 @@ const Parades = () => {
                     <HoverVideo
                       key={media.id}
                       preload="metadata"
+                      poster={getOptimizedPoster(media.video_url)}
+                      fetchPriority={media.id === 1 ? 'high' : 'auto'}
                       width='100%'
-                      height='auto'
                       controls
-                      style={{ paddingBottom: '10px' }}
+                      style={{ paddingBottom: '10px', aspectRatio: '16/9', objectFit: 'cover', backgroundColor: '#000' }}
                       src={media.video_url}
                     />
                   </div>
