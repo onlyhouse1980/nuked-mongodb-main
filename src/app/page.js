@@ -6,7 +6,7 @@ import * as React from "react";
 import { motion, inView } from "framer-motion";
 import profileImage from "../../public/Images/WebPFiles/psound.webp";
 import Marquee from "react-fast-marquee";
-import { MeetingNotice } from "@/components/MeetingNotice"
+import MeetingNotice from "@/components/MeetingNotice"
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
