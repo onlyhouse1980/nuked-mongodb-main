@@ -6,6 +6,7 @@ import * as React from "react";
 import { motion, inView } from "framer-motion";
 import profileImage from "../../public/Images/WebPFiles/psound.webp";
 import Marquee from "react-fast-marquee";
+import { MeetingNotice } from "@/components/MeetingNotice"
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
@@ -25,9 +26,7 @@ export default function index() {
           <b>Community Group</b>
         </h2>
        <Marquee>
-          <h5 className="text-white z-100 drop-shadow-md !important" style={{ color: '#ffffff', textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
-           ANNUAL MEETING - We will meet at 11 a.m. Saturday, June 27 at the Orchard Beach Public Park (the turnaroundat the south end of Orchard Beach Drive) &nbsp;
-          </h5>
+          <MeetingNotice />
         </Marquee>
       </div>
       <div>
