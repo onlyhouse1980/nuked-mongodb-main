@@ -24,8 +24,8 @@ export default function index() {
         <h2 className={styles.bgText}>
           <b>Community Group</b>
         </h2>
-       <Marquee className="z=100 drop-shadow-md">
-          <h5 className="text-white z=100 drop-shadow-md">
+       <Marquee className="z-100 drop-shadow-md">
+          <h5 className="text-white z-100 drop-shadow-md !important" style={{ color: '#ffffff' }}>
            ANNUAL MEETING - We will meet at 11 a.m. Saturday, June 27 at the Orchard Beach Public Park (the turnaroundat the south end of Orchard Beach Drive) &nbsp;
           </h5>
         </Marquee>
