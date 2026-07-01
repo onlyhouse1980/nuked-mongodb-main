@@ -30,7 +30,7 @@ const NAV_ITEMS = [
     type: "dropdown",
     label: "Consumer Confidence",
     items: [
-      // { label: "CCR 2025", href: "/pdfs/consumer2026" },
+      { label: "CCR 2025", href: "/pdfs/consumer2026" },
       { label: "CCR 2024", href: "/pdfs/consumer2025" },
       { label: "CCR 2023", href: "/pdfs/consumer2024" },
       { label: "CCR 2022", href: "/pdfs/consumer2023" },
