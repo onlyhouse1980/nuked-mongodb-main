@@ -25,9 +25,9 @@ export default function index() {
         <h2 className={styles.bgText}>
           <b>Community Group</b>
         </h2>
-       <Marquee>
-          <MeetingNotice />
-        </Marquee>
+       //<Marquee>
+       //   <MeetingNotice />
+       // </Marquee>
       </div>
       <div>
         <motion.div
