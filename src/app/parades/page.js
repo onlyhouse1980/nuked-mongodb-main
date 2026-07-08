@@ -64,7 +64,7 @@ const media_urls = [
   {
     id: 9,
     title: '2026 Parade',
-    url: 'parades/parade8',
+    url: 'parades/parade9',
     video_url:
       'https://res.cloudinary.com/dqxg7ccdf/video/upload/v1783518914/july426_n9u00k.mp4#t=0.001',
   },
