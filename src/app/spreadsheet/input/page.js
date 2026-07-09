@@ -1,14 +1,11 @@
-'use client';
-
-// pages/spreadsheet/input.js
 import Spreadsheet from '@/components/Spreadsheet';
-import styles from "@/routes/spreadsheet/input.module.css"
+import styles from '@/routes/spreadsheet/input.module.css';
+
 const Home = () => (
   <div className={styles.horizscroll}>
     <h1>OBCG Meter Readings</h1>
-    <div className= {styles.scroll}>
-    
-    <Spreadsheet />
+    <div className={styles.scroll}>
+      <Spreadsheet />
     </div>
   </div>
 );

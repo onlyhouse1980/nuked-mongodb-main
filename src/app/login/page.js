@@ -2,8 +2,8 @@
 
 // pages/login.js
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react"; // CRITICAL FIX: Import the signIn function
 import Link from "next/link";
 
@@ -19,12 +19,21 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-export default function Login() {
-  const [email, setEmail] = useState("");
+function getSafeCallbackUrl(callbackUrl) {
+  if (!callbackUrl || !callbackUrl.startsWith('/') || callbackUrl.startsWith('//')) {
+    return null;
+  }
+
+  return callbackUrl;
+}
+
+function LoginForm() {
+  const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
 
 
   const handleSubmit = async (event) => {
@@ -35,7 +44,8 @@ export default function Login() {
     // CRITICAL FIX: Use the signIn function from NextAuth.js
     const result = await signIn("credentials", {
       redirect: false, // We will handle the redirect manually
-      email,
+      username: identifier,
+      email: identifier,
       password,
     });
 
@@ -46,9 +56,13 @@ export default function Login() {
       // If there's an error, display it to the user
       setError("Invalid credentials. Please try again.");
     } else {
-      // If login is successful, redirect to the dashboard
-      console.log("Login successful. Redirecting to dashboard...");
-      router.push("/dashboard");
+      const callbackUrl = getSafeCallbackUrl(searchParams.get('callbackUrl'));
+      const destination =
+        callbackUrl || (identifier.trim().toLowerCase() === 'admin'
+          ? '/spreadsheet/input'
+          : '/dashboard');
+
+      router.push(destination);
     }
 
     setIsLoading(false);
@@ -62,20 +76,20 @@ export default function Login() {
           <CardHeader className="text-center">
             <CardTitle className="text-3xl font-bold">Log In</CardTitle>
             <CardDescription>
-              Enter your email and password to access your dashboard.
+              Enter your username or email and password.
             </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <label htmlFor="email">Email</label>
+                <label htmlFor="identifier">Username or Email</label>
                 <Input
                   className="inputs"
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="m@example.com"
+                  id="identifier"
+                  type="text"
+                  value={identifier}
+                  onChange={(e) => setIdentifier(e.target.value)}
+                  placeholder="admin or m@example.com"
                   required
                 />
               </div>
@@ -109,5 +123,13 @@ export default function Login() {
         </Card>
       </div>
     </>
+  );
+}
+
+export default function Login() {
+  return (
+    <Suspense>
+      <LoginForm />
+    </Suspense>
   );
 }

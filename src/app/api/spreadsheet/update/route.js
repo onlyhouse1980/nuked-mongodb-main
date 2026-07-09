@@ -1,8 +1,15 @@
 import { NextResponse } from 'next/server';
 
+import { getAdminSession } from '@/lib/auth';
 import { getMongoClient } from '@/lib/mongodb';
 
 export async function POST(request) {
+  const session = await getAdminSession();
+
+  if (!session) {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
     const client = await getMongoClient();
 

@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "seed:admin": "node --env-file=.env.local scripts/seed-admin-user.mjs",
     "start": "next start",
     "lint": "eslint src/"
   },

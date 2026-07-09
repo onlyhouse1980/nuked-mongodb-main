@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import { TextField, Button } from '@mui/material';
 import axios from 'axios';
