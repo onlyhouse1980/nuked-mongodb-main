@@ -250,7 +250,7 @@ const User = () => {
             <tr>
               <td className={styles.td3}>
                 <p className={styles.p}></p>
-                <p className={styles.p}>Last reading - February 01, 2026</p>
+                <p className={styles.p}>Last reading - September 29, 2026</p>
               </td>
               <td className={styles.td3}>
                 <input
@@ -259,8 +259,8 @@ const User = () => {
                   }}
                   type="text"
                   id="info2"
-                  aria-label="February 01, 2026"
-                  value={user?.feb01_26 || ''}
+                  aria-label="September 29, 2026"
+                  value={user?.oct01_26 || ''}
                   readOnly
                 />
               </td>
@@ -268,7 +268,7 @@ const User = () => {
             <tr>
               <td className={styles.td3}>
                 <p className={styles.p}>
-                  Gallons used since February 01, 2026.
+                  Gallons used since September 29, 2026.
                 </p>
               </td>
               <td className={styles.td3}>
