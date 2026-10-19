@@ -168,7 +168,7 @@ const User = () => {
 
   if (error) return <p>Error: {error}</p>;
 
-  const baselineReading = Number(user?.feb01_26 ?? 0);
+  const baselineReading = Number(user?.oct01_26 ?? 0);
 
   function handleCalculate() {
     const parsedReading = Number.parseInt(currentReading, 10);
