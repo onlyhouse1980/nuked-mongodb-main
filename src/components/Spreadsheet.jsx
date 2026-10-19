@@ -16,7 +16,7 @@ const DEFAULT_VISIBLE_COLUMNS = [
   'apr01_26',
   'jun01_26',
   'aug01_26',
-  'oct01_26',
+  'sep29_26',
 ];
 
 const Spreadsheet = () => {
